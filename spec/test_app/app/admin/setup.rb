@@ -11,4 +11,6 @@ Admin4rails.setup do
       href '#'
     end
   end
+
+  resource class: Post
 end

@@ -1,3 +1,1 @@
-Admin4rails::Engine.routes.draw do
-  root to: 'application#home'
-end
+Admin4rails.setup_routes!
