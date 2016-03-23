@@ -5,10 +5,10 @@ module Admin4rails
     end
 
     def setup_routes!
-      dsl_resources = @application.dsl.resources
+      dsl_resources = @application.resources
       Admin4rails::Engine.routes.draw do
         dsl_resources.each do |resource|
-          resources resource[:class].name.underscore.pluralize.to_sym, controller: 'resources'
+          resources resource.plural_sym
         end
         root to: 'application#home'
       end

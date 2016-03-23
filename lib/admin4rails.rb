@@ -1,12 +1,15 @@
-require 'admin4rails/engine'
 require 'hamlit'
 require 'easydsl'
 require 'font-awesome-rails'
+
+require 'admin4rails/engine'
 require 'admin4rails/router'
+require 'admin4rails/resource'
 
 module Admin4rails
   def self.initialize!
     load_all_files
+    init_resources
     @router = Admin4rails::Router.new(self)
     setup_reloader if Rails.env.development?
   end
@@ -27,16 +30,28 @@ module Admin4rails
     @dsl
   end
 
+  def self.resources
+    @resources ||= []
+  end
+
   private
 
   def self.setup_reloader
     reloader = ActiveSupport::FileUpdateChecker.new(admin_files) do
       puts 'Admin4Rails reload!'
       load_all_files
+      init_resources
       setup_routes!
     end
     ActionDispatch::Reloader.to_prepare do
       reloader.execute_if_updated
+    end
+  end
+
+  def self.init_resources
+    resources.clear
+    dsl.resources.each do |resource|
+      resources << Resource.new(resource)
     end
   end
 

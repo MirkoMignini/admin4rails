@@ -12,5 +12,14 @@ Admin4rails.setup do
     end
   end
 
-  resource class: Post
+  sidebar do
+    layout do
+      header text: 'Main'
+      resources
+    end
+  end
+
+  resource class: Post do
+    icon 'fa-table'
+  end
 end
