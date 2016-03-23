@@ -14,5 +14,7 @@
  *= require font-awesome
  *= require admin4rails/AdminLTE
  *= require admin4rails/skin-blue
+ *= require admin4rails/plugins/datatables/jquery.dataTables.min
+ *= require admin4rails/plugins/datatables/dataTables.bootstrap
  *= require_self
  */

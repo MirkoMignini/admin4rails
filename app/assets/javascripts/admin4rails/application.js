@@ -13,4 +13,6 @@
 //= require admin4rails/jQuery-2.1.4.min
 //= require admin4rails/jquery-ui.min
 //= require admin4rails/bootstrap.min
+//= require admin4rails/plugins/datatables/jquery.dataTables.min
+//= require admin4rails/plugins/datatables/dataTables.bootstrap.min
 //= require admin4rails/app

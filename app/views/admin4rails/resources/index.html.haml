@@ -1,1 +1,16 @@
 index
+
+%table{id: 'datatable'}
+  %thead
+    %tr
+      %th Name
+      %th Position
+      %th Office
+      %th Extn.
+      %th Start date
+      %th Salary
+
+:coffeescript
+  $ ->
+    $('#datatable').DataTable()
+    return
