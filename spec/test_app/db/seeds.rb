@@ -1,2 +1,3 @@
-Post.create(title: 'test 1', description: 'Long long long description')
-Post.create(title: 'test 2', description: 'Long long long description')
+1000.times do |i|
+  Post.create(title: "Test #{i}", description: 'Long long long description')
+end

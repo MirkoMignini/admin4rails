@@ -1,11 +1,34 @@
-= get_datatable(@resource, 'datatable')
+
+= box do
+  = box_body do
+    = get_datatable(@resource, 'datatable')
+  = box_footer do
+    .pull-right
+      = link_to(t('.create'), new_post_path, class: 'btn btn-primary', method: :post)
 
 %script
   = "columns = #{raw get_datatable_columns(@resource)}"
 
 :coffeescript
-
   $ ->
     $('#datatable').DataTable
       'ajax': '/admin4rails/posts.json'
       'columns': columns
+      'columnDefs': [
+        {
+          'render': (data, type, row) ->
+            "<a href=/admin4rails/posts/" + data + ">" + data + "</a>"
+          'targets': 0
+        },
+        {
+          "targets": -1,
+          "data": null,
+          'render': (data, type, row) ->
+            get_actions(data, type, row)
+        }
+      ]
+
+  get_actions = (data, type, row) ->
+    "<a href=/admin4rails/posts/" + row.id + ">Show</a> | " +
+    "<a href=/admin4rails/posts/" + row.id + "/edit>Edit</a> | " +
+    "<a href=/admin4rails/posts/" + row.id + " data-method=delete data-confirm='Are you sure?' rel='nofollow'>Delete</a>"
