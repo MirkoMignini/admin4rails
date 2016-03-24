@@ -1,6 +1,8 @@
 require 'hamlit'
 require 'easydsl'
 require 'font-awesome-rails'
+require 'sass-rails'
+require 'bootstrap-sass'
 
 require 'admin4rails/engine'
 require 'admin4rails/router'

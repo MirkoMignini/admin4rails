@@ -1,16 +1,11 @@
-index
+= get_datatable(@resource, 'datatable')
 
-%table{id: 'datatable'}
-  %thead
-    %tr
-      %th Name
-      %th Position
-      %th Office
-      %th Extn.
-      %th Start date
-      %th Salary
+%script
+  = "columns = #{raw get_datatable_columns(@resource)}"
 
 :coffeescript
+
   $ ->
-    $('#datatable').DataTable()
-    return
+    $('#datatable').DataTable
+      'ajax': '/admin4rails/posts.json'
+      'columns': columns

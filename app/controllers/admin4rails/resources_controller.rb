@@ -4,10 +4,11 @@ require 'pp'
 module Admin4rails
   class ResourcesController < ApplicationController
     def index
+      @resource = resource
       @records = resource.all
       respond_to do |format|
         format.html
-        format.json { render json: @records }
+        format.json { render json: index_json }
       end
     end
 
@@ -36,6 +37,14 @@ module Admin4rails
 
     def self.resource
       @@resource
+    end
+
+    private
+
+    def index_json
+      {
+        data: @records
+      }
     end
   end
 end

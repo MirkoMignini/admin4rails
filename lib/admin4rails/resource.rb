@@ -1,11 +1,14 @@
+require 'admin4rails/attribute'
+
 module Admin4rails
   class Resource
-    attr_reader :node, :klass
+    attr_reader :node, :klass, :attributes
 
     def initialize(resource)
       @node = resource
       @klass = resource[:class]
       create_controller
+      create_attributes
     end
 
     def plural_sym
@@ -42,6 +45,13 @@ module Admin4rails
     def create_controller
       eval "class Admin4rails::#{controller_name} < ResourcesController; end"
       controller_class.resource = self
+    end
+
+    def create_attributes
+      @attributes = []
+      @klass.columns.each do |column|
+        @attributes << Attribute.new(self, column)
+      end
     end
   end
 end
