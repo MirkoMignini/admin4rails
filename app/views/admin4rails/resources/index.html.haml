@@ -6,18 +6,19 @@
     .pull-right
       = link_to(t('.create'), new_post_path, class: 'btn btn-primary', method: :post)
 
-%script
-  = "columns = #{raw get_datatable_columns(@resource)}"
+:javascript
+  path = "#{@resource.path}"
+  columns = #{raw get_datatable_columns(@resource)}
 
 :coffeescript
   $ ->
     $('#datatable').DataTable
-      'ajax': '/admin4rails/posts.json'
+      'ajax': path + '.json'
       'columns': columns
       'columnDefs': [
         {
           'render': (data, type, row) ->
-            "<a href=/admin4rails/posts/" + data + ">" + data + "</a>"
+            "<a href=" + path + "/" + data + ">" + data + "</a>"
           'targets': 0
         },
         {

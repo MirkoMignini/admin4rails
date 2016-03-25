@@ -1,5 +1,4 @@
 require_dependency "admin4rails/application_controller"
-require 'pp'
 
 module Admin4rails
   class ResourcesController < ApplicationController
@@ -25,18 +24,6 @@ module Admin4rails
     end
 
     def update
-    end
-
-    def resource
-      @@resource
-    end
-
-    def self.resource=(resource)
-      @@resource = resource
-    end
-
-    def self.resource
-      @@resource
     end
 
     private

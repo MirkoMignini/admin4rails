@@ -1,6 +1,7 @@
 Admin4rails.setup do
   config do
     title 'Admin4Rails'
+    adapter :activerecord
   end
 
   header do
@@ -22,4 +23,6 @@ Admin4rails.setup do
   resource class: Post do
     icon 'fa-table'
   end
+
+  resource class: Comment
 end
