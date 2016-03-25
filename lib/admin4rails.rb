@@ -3,6 +3,7 @@ require 'easydsl'
 require 'font-awesome-rails'
 require 'sass-rails'
 require 'bootstrap-sass'
+require 'datagrid'
 
 require 'admin4rails/engine'
 require 'admin4rails/router'
