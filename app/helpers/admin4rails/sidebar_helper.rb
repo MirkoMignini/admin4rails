@@ -25,10 +25,10 @@ module Admin4rails
 
     def get_resource(resource)
       content_tag(:li) do
-        link_to(resource.plural_sym) do
-          content_tag(:i, class: "fa #{resource.icon}") {} +
-          content_tag(:span) { resource.plural_human }
-        end.html_safe
+        link_to(resource.collection_path) do
+          content_tag(:i, class: "fa #{get_icon(resource)}") {} +
+          content_tag(:span) { resource.model_name.pluralize.humanize }
+        end
       end
     end
   end

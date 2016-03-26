@@ -26,7 +26,7 @@ module Admin4rails
   end
 
   def self.setup_routes!
-    @router.setup_routes!
+    @router.setup_routes! if @router
   end
 
   def self.dsl

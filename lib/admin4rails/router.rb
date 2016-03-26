@@ -8,7 +8,7 @@ module Admin4rails
       dsl_resources = @application.resources
       Admin4rails::Engine.routes.draw do
         dsl_resources.each do |resource|
-          resources resource.plural_sym
+          resources resource.model_name.underscore.pluralize.to_sym
         end
         root to: 'application#home'
       end

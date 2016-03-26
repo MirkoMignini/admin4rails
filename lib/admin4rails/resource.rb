@@ -5,27 +5,18 @@ module Admin4rails
     attr_reader :node, :klass, :attributes
 
     def initialize(resource)
-      init_adapter
-      @node = resource
-      @klass = resource[:class]
-      create_controller
-      create_attributes
+      begin
+        init_adapter
+        @node = resource
+        @klass = resource[:class]
+        create_controller
+        create_attributes
+      rescue ActiveRecord::StatementInvalid
+      end
     end
 
-    def plural_sym
-      klass.name.underscore.pluralize.to_sym
-    end
-
-    def plural_string
-      klass.name.pluralize
-    end
-
-    def plural_human
-      klass.name.pluralize.humanize
-    end
-
-    def path
-      "/admin4rails/#{klass.name.underscore.pluralize}"
+    def model_name
+      klass.name
     end
 
     def controller_name
@@ -36,13 +27,21 @@ module Admin4rails
       Admin4rails.const_get("Admin4rails::#{controller_name}")
     end
 
-    def icon
-      return node.icon if node.icon?
-      'fa-th'
+    def all
+      not_implemented
     end
 
-    def all
-      raise NotImplementedError, "Method #{__method__.to_s} must be implemented in adapter."
+    ['collection_', 'new_', 'edit_', ''].each do |method|
+      %w(path url).each do |suffix|
+        define_method("#{method}#{suffix}") do |*args|
+          if method == 'collection_'
+            url = "#{klass.name.underscore.pluralize}_#{suffix}"
+          else
+            url = "#{method}#{klass.name.underscore}_#{suffix}"
+          end
+          Admin4rails::Engine.routes.url_helpers.send(url.to_sym, *args)
+        end
+      end
     end
 
     private

@@ -1,1 +1,7 @@
-= datagrid_table(@grid)
+
+= box do
+  = box_body do
+    = datagrid_table(@grid)
+  = box_footer do
+    .pull-right
+      = link_to(t('.create'), new_post_path, class: 'btn btn-primary', method: :post)

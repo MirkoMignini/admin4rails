@@ -9,17 +9,24 @@ module Admin4rails
     def index
       @records = resource.all
 
+      grid_base = "Admin4rails::#{resource.model_name.pluralize}GridBase"
       eval %{
-        class Admin4rails::PostsGrid
-          include Datagrid
-          include Admin4rails::Plugins::DataGrid::Grid
+        class #{grid_base}
           def self.resource=(res); @@resource = res end
+          def self.resource; @@resource end
           def resource; @@resource end
         end
       }
-      Admin4rails::PostsGrid.resource = resource
+      Admin4rails.const_get(grid_base).resource = resource
 
-      @grid = Admin4rails::PostsGrid.new(params[:grid])
+      grid_controller = "Admin4rails::#{resource.model_name.pluralize}Grid"
+      eval %{
+        class #{grid_controller} < #{grid_base}
+          include Datagrid
+          include Admin4rails::Plugins::DataGrid::Grid
+        end
+      }
+      @grid = Admin4rails.const_get(grid_controller).new(params[:grid])
 
       respond_to do |format|
         format.html
