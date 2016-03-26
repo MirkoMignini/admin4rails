@@ -14,7 +14,7 @@ module Admin4rails
     end
 
     def get_datatable_columns(resource)
-      resource.attributes.map{ |attribute| {data: attribute.name} }.concat([data: 'Actions']).to_json
+      resource.attributes.map { |attribute| { data: attribute.name } }.concat([data: 'Actions']).to_json
     end
   end
 end

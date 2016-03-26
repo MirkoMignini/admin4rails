@@ -1,31 +1,31 @@
-require_dependency "admin4rails/application_controller"
+require_dependency 'admin4rails/application_controller'
 
 require 'admin4rails/plugins/datagrid/grid'
 
 module Admin4rails
   class ResourcesController < ApplicationController
-    before_filter :set_resource
+    before_action :set_resource
 
     def index
       @records = resource.all
 
       grid_base = "Admin4rails::#{resource.model_name.pluralize}GridBase"
-      eval %{
+      eval "
         class #{grid_base}
           def self.resource=(res); @@resource = res end
           def self.resource; @@resource end
           def resource; @@resource end
         end
-      }
+      "
       Admin4rails.const_get(grid_base).resource = resource
 
       grid_controller = "Admin4rails::#{resource.model_name.pluralize}Grid"
-      eval %{
+      eval "
         class #{grid_controller} < #{grid_base}
           include Datagrid
           include Admin4rails::Plugins::DataGrid::Grid
         end
-      }
+      "
       @grid = Admin4rails.const_get(grid_controller).new(params[:grid])
 
       respond_to do |format|

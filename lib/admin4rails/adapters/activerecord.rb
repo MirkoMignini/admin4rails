@@ -1,9 +1,7 @@
 module Admin4rails
   module Adapters
     module ActiveRecord
-      def all
-        klass.all
-      end
+      delegate :all, to: :klass
 
       private
 
@@ -12,6 +10,7 @@ module Admin4rails
         @klass.columns.each do |column|
           @attributes << Attribute.new(self, column)
         end
+        @attributes
       end
     end
   end

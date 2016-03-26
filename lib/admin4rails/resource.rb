@@ -2,17 +2,13 @@ require 'admin4rails/attribute'
 
 module Admin4rails
   class Resource
-    attr_reader :node, :klass, :attributes
+    attr_reader :node, :klass
 
     def initialize(resource)
-      begin
-        init_adapter
-        @node = resource
-        @klass = resource[:class]
-        create_controller
-        create_attributes
-      rescue ActiveRecord::StatementInvalid
-      end
+      init_adapter
+      @node = resource
+      @klass = resource[:class]
+      create_controller
     end
 
     def model_name
@@ -31,13 +27,19 @@ module Admin4rails
       not_implemented
     end
 
-    ['collection_', 'new_', 'edit_', ''].each do |method|
+    def attributes
+      @attributes || create_attributes
+    end
+
+    %w(index new edit show).each do |method|
       %w(path url).each do |suffix|
-        define_method("#{method}#{suffix}") do |*args|
-          if method == 'collection_'
-            url = "#{klass.name.underscore.pluralize}_#{suffix}"
+        define_method("#{method}_#{suffix}") do |*args|
+          url = if method == 'index'
+            "#{klass.name.underscore.pluralize}_#{suffix}"
+          elsif method == 'show'
+            "#{klass.name.underscore}_#{suffix}"
           else
-            url = "#{method}#{klass.name.underscore}_#{suffix}"
+            "#{method}_#{klass.name.underscore}_#{suffix}"
           end
           Admin4rails::Engine.routes.url_helpers.send(url.to_sym, *args)
         end
@@ -48,24 +50,24 @@ module Admin4rails
 
     def init_adapter
       case Admin4rails.config.adapter
-        when :activerecord
-          require 'admin4rails/adapters/activerecord'
-          extend Adapters::ActiveRecord
-        when :mongoid
-          require 'admin4rails/adapters/mongoid'
-          extend Adapters::Mongoid
-        else
-          raise ArgumentError, "Unknown adapter #{Admin4rails.config.adapter}."
+      when :activerecord
+        require 'admin4rails/adapters/activerecord'
+        extend Adapters::ActiveRecord
+      when :mongoid
+        require 'admin4rails/adapters/mongoid'
+        extend Adapters::Mongoid
+      else
+        raise ArgumentError, "Unknown adapter #{Admin4rails.config.adapter}."
       end
     end
 
     def create_controller
-      eval %{
+      eval "
         class Admin4rails::#{controller_name} < ResourcesController
           def self.resource=(res); @@resource = res end
           def resource; @@resource end
         end
-      }
+      "
       controller_class.resource = self
     end
 
@@ -74,7 +76,7 @@ module Admin4rails
     end
 
     def not_implemented
-      raise NotImplementedError, "Method #{__method__.to_s} must be implemented in adapter."
+      raise NotImplementedError, "Method #{__method__} must be implemented in adapter."
     end
   end
 end
