@@ -1,0 +1,26 @@
+#accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+  .panel.panel-default
+    #headingOne.panel-heading{:role => "tab"}
+      %h4.panel-title
+        %a.collapsed{"aria-controls" => "collapseOne", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+          Filters
+    #collapseOne.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: ('in' if grid.assets.selector.count > 0)}
+
+      = form_for grid, options do |f|
+
+        .panel-body
+          - grid.filters.in_groups_of(2).each do |filters_row|
+            .row
+              - filters_row.each do |filter|
+                .col-sm-6
+                  - if filter != nil
+                    .datagrid-filter.filter.form-group
+                      = f.datagrid_label filter, class: 'col-sm-3 control-label'
+                      .col-sm-9
+                        = f.datagrid_filter filter, class: 'form-control'
+
+        .panel-footer
+          /.datagrid-actions.form-group
+          = f.submit I18n.t("datagrid.form.search").html_safe, :class => "datagrid-submit btn btn-info"
+          - empty_parameter = Rails.version >= "4.1.0" && Rails.version <= '4.1.2' ? nil : {}
+          = link_to I18n.t('datagrid.form.reset').html_safe, url_for(grid.to_param => empty_parameter), :class => "datagrid-reset"

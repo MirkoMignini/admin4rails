@@ -1,7 +1,10 @@
 
+= content_for(:title, @resource.model_name.pluralize.humanize)
+= content_for(:description, '')
+
 = box do
   = box_body do
-    = datagrid_table(@grid)
+    = datagrid(@grid)
   = box_footer do
     .pull-right
-      = link_to(t('.create'), new_post_path, class: 'btn btn-primary', method: :post)
+      = link_to("Create #{@resource.model_name.humanize}", new_post_path, class: 'btn btn-primary', method: :post)

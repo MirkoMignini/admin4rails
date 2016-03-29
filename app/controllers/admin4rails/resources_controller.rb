@@ -7,7 +7,7 @@ module Admin4rails
     before_action :set_resource
 
     def index
-      @records = resource.all
+      # @records = resource.all
 
       grid_base = "Admin4rails::#{resource.model_name.pluralize}GridBase"
       eval "
@@ -26,11 +26,14 @@ module Admin4rails
           include Admin4rails::Plugins::DataGrid::Grid
         end
       "
-      @grid = Admin4rails.const_get(grid_controller).new(params[:grid])
+
+      @grid = Admin4rails.const_get(grid_controller).new(params[:grid]) do |scope|
+        scope.page(params[:page])
+      end
 
       respond_to do |format|
         format.html
-        format.json { render json: @records }
+        format.json { render json: resource.all }
       end
     end
 
@@ -41,6 +44,7 @@ module Admin4rails
     end
 
     def new
+      @record = resource.klass.new
     end
 
     def create

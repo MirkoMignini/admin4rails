@@ -5,14 +5,18 @@ Coveralls.wear!
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../test_app/config/environment', __FILE__)
 
-# Load support files
-Dir[File.join File.dirname(__FILE__), 'support', '**', '*.rb'].each { |f| require f }
-
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+
+# Capybara files
+require 'capybara/rspec'
+require 'capybara/rails'
+
+# Set a test url
+Admin4rails::Engine.routes.default_url_options = { host: 'test.com' }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

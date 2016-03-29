@@ -1,8 +1,9 @@
 .content-wrapper
   %section.content-header
     %h1
-      Page title
-      %small description
+      = content_for :title
+      %small
+        = content_for :description
 
   %section.content
     = yield
