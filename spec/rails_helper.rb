@@ -16,6 +16,9 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 
+# FactoryGirl files
+require 'factory_girl_rails'
+
 # Set capybara javascript driver
 Capybara.javascript_driver = :poltergeist
 
@@ -71,4 +74,5 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include Capybara::RSpecMatchers
+  config.include FactoryGirl::Syntax::Methods
 end

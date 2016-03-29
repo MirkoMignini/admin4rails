@@ -26,9 +26,7 @@ module Admin4rails
 
     context 'Content' do
       before(:context) do
-        50.times do |index|
-          Post.create(title: "Post #{index}", description: 'description')
-        end
+        create_list(:post, 50)
       end
 
       context 'Datagrid' do

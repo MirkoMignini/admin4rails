@@ -62,7 +62,7 @@ module Admin4rails
     end
 
     def update
-      @record = resource.klass.update(record_params)
+      @record.update(record_params)
       respond_to do |format|
         if @record.save
           format.html { redirect_to @record, notice: 'Record was successfully updated.' }
@@ -85,7 +85,7 @@ module Admin4rails
     private
 
     def record_params
-      # params.require(:book).permit(:title, :user_id)
+      params.require(:record).permit(resource.permitted_params)
     end
 
     def set_record

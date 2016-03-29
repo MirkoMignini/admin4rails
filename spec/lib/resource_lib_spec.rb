@@ -8,7 +8,7 @@ module Admin4rails
     end
 
     let(:post) do
-      Post.create(title: 'Title', description: 'Description')
+      create(:post)
     end
 
     let(:post_title_attribute) do
@@ -76,6 +76,12 @@ module Admin4rails
             expect(post_title_attribute.name).to eq('title')
             expect(post_title_attribute.display_text).to eq('Title')
           end
+        end
+      end
+
+      describe 'Permitted params' do
+        it 'returns the permitted params' do
+          expect(post_resource.permitted_params).to eq([:title, :description])
         end
       end
     end

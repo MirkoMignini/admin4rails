@@ -31,6 +31,10 @@ module Admin4rails
       @attributes || create_attributes
     end
 
+    def permitted_params
+      @attributes.map { |attribute| attribute.name.to_sym } - standard_params
+    end
+
     %w(index new edit show).each do |method|
       %w(path url).each do |suffix|
         define_method("#{method}_#{suffix}") do |*args|
@@ -59,6 +63,10 @@ module Admin4rails
       else
         raise ArgumentError, "Unknown adapter #{Admin4rails.config.adapter}."
       end
+    end
+
+    def standard_params
+      [:id, :_id, :created_at, :updated_at]
     end
 
     def create_controller
