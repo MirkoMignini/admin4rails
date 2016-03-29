@@ -1,6 +1,7 @@
 require 'hamlit'
 require 'easydsl'
 require 'font-awesome-rails'
+require 'jquery-rails'
 require 'sass-rails'
 require 'bootstrap-sass'
 require 'datagrid'

@@ -14,6 +14,10 @@ require 'rspec/rails'
 # Capybara files
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
+
+# Set capybara javascript driver
+Capybara.javascript_driver = :poltergeist
 
 # Set a test url
 Admin4rails::Engine.routes.default_url_options = { host: 'test.com' }

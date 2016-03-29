@@ -10,8 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require admin4rails/jQuery-2.1.4.min
-//= require admin4rails/jquery-ui.min
+//= require jquery
+//= require jquery_ujs
 //= require bootstrap-sprockets
 //= require admin4rails/plugins/datatables/jquery.dataTables.min
 //= require admin4rails/plugins/datatables/dataTables.bootstrap.min

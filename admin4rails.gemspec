@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 4.2.5'
   s.add_dependency 'coffee-rails', '~> 4.1.0'
+  s.add_dependency 'jquery-rails'
   s.add_dependency 'hamlit'
   s.add_dependency 'easydsl'
   s.add_dependency 'font-awesome-rails'
@@ -31,4 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'capybara'
+  s.add_development_dependency 'poltergeist'
 end

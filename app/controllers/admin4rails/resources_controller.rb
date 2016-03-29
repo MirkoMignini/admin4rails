@@ -5,6 +5,7 @@ require 'admin4rails/plugins/datagrid/grid'
 module Admin4rails
   class ResourcesController < ApplicationController
     before_action :set_resource
+    before_action :set_record, only: [:show, :edit, :update, :destroy]
 
     def index
       # @records = resource.all
@@ -48,15 +49,48 @@ module Admin4rails
     end
 
     def create
+      @record = resource.klass.create(record_params)
+      respond_to do |format|
+        if @record.save
+          format.html { redirect_to @record, notice: 'Record was successfully created.' }
+          format.json { render :show, status: :created, location: @record }
+        else
+          format.html { render :new }
+          format.json { render json: @record.errors, status: :unprocessable_entity }
+        end
+      end
     end
 
     def update
+      @record = resource.klass.update(record_params)
+      respond_to do |format|
+        if @record.save
+          format.html { redirect_to @record, notice: 'Record was successfully updated.' }
+          format.json { render :show, status: :ok, location: @record }
+        else
+          format.html { render :edit }
+          format.json { render json: @record.errors, status: :unprocessable_entity }
+        end
+      end
     end
 
-    def delete
+    def destroy
+      @record.destroy
+      respond_to do |format|
+        format.html { redirect_to resource.index_path, notice: 'Record was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
 
     private
+
+    def record_params
+      # params.require(:book).permit(:title, :user_id)
+    end
+
+    def set_record
+      @record = resource.klass.find(params[:id])
+    end
 
     def set_resource
       @resource = resource

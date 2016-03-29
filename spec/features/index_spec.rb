@@ -105,9 +105,10 @@ module Admin4rails
             expect(page).to have_selector('ul.dropdown-menu li a', text: button_text)
           end
 
-          it 'goes to new page' do
-            # click_link(button_create_text)
-            # expect(page).to have_current_path(Admin4rails::Engine.routes.url_helpers.new_post_path)
+          it 'deletes the record' do
+            expect do
+              page.first("a[href='/admin4rails/posts/1'][text()='Delete']").click
+            end.to change { Post.all.count }.by(-1)
           end
         end
       end

@@ -2,11 +2,11 @@ require 'admin4rails/attribute'
 
 module Admin4rails
   class Resource
-    attr_reader :node, :klass
+    attr_reader :dsl, :klass
 
     def initialize(resource)
       init_adapter
-      @node = resource
+      @dsl = resource
       @klass = resource[:class]
       create_controller
     end

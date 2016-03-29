@@ -1,7 +1,7 @@
 module Admin4rails
   module ResourcesHelper
     def get_icon(resource)
-      return resource.node.icon if resource.node.icon?
+      return resource.dsl.icon if resource.dsl.icon?
       'fa-th'
     end
   end
