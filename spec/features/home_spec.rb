@@ -12,5 +12,10 @@ module Admin4rails
       expect(page.title).to eq(Admin4rails.config.title)
       expect(page).to have_content 'Posts'
     end
+
+    context 'Sidebar' do
+      it 'has the current page selected' do
+      end
+    end
   end
 end

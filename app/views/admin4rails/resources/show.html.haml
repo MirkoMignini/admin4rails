@@ -6,7 +6,5 @@
     %table.table
       - @resource.attributes.each do |attribute|
         %tr
-          %td
-            %strong
-              = attribute.name.humanize
-          %td= @record[attribute.name]
+          %td.show_key= attribute.name.humanize
+          %td.show_value= @record[attribute.name]

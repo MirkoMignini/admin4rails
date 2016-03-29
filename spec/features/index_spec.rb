@@ -19,11 +19,6 @@ module Admin4rails
       end
     end
 
-    context 'Sidebar' do
-      it 'has the current page selected' do
-      end
-    end
-
     context 'Content' do
       before(:context) do
         create_list(:post, 50)
