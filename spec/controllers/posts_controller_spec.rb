@@ -53,22 +53,22 @@ module Admin4rails
 
         it 'creates a new post' do
           expect do
-            post(:create, record: post_attributes)
+            post(:create, post: post_attributes)
           end.to change { Post.count }.by(1)
         end
 
         it 'redirect to the new post after creation' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(response).to redirect_to(Post.last)
         end
 
         it 'assigns the resource to controller' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(assigns(:resource)).to be_kind_of(Resource)
         end
 
         it 'saves and assigns new post to @record' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(assigns(:record)).to be_kind_of ActiveRecord::Base
           expect(assigns(:record)).to be_persisted
         end
@@ -79,22 +79,22 @@ module Admin4rails
 
         it "doesn't create a new post" do
           expect do
-            post(:create, record: post_attributes)
+            post(:create, post: post_attributes)
           end.to change { Post.count }.by(0)
         end
 
         it 'renders new page again' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(response).to render_template('new')
         end
 
         it 'assigns the resource to controller' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(assigns(:resource)).to be_kind_of(Resource)
         end
 
         it 'assigns post to @post' do
-          post(:create, record: post_attributes)
+          post(:create, post: post_attributes)
           expect(assigns(:record)).to be_kind_of ActiveRecord::Base
         end
       end
@@ -102,7 +102,7 @@ module Admin4rails
 
     describe '#update' do
       let(:post) { create(:post) }
-      before(:each) { put(:update, id: post.id, record: new_values) }
+      before(:each) { put(:update, id: post.id, post: new_values) }
 
       context 'when valid' do
         let(:new_values) { attributes_for(:post) }

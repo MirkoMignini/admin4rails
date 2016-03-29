@@ -1,0 +1,12 @@
+= content_for(:title, "#{@resource.model_name.humanize}")
+= content_for(:description, '')
+
+= box do
+  = box_body do
+    %table.table
+      - @resource.attributes.each do |attribute|
+        %tr
+          %td
+            %strong
+              = attribute.name.humanize
+          %td= @record[attribute.name]

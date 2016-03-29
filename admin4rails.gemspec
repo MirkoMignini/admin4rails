@@ -5,10 +5,10 @@ require 'admin4rails/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'admin4rails'
+  s.name        = 'Admin4rails'
   s.version     = Admin4rails::VERSION
   s.authors     = ['Mirko Mignini']
-  s.email       = ['m.mignini@wepush.org']
+  s.email       = ['mirko.mignini@gmail.com']
   s.homepage    = 'TODO'
   s.summary     = 'TODO: Summary of Admin4rails.'
   s.description = 'TODO: Description of Admin4rails.'
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails', '~> 5.0'
   s.add_dependency 'datagrid'
   s.add_dependency 'kaminari'
+  s.add_dependency 'simple_form'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'

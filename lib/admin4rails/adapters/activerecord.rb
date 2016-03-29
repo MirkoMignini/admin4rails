@@ -5,7 +5,7 @@ module Admin4rails
 
       private
 
-      def create_attributes
+      def setup_attributes
         @attributes = []
         @klass.columns.each do |column|
           @attributes << Attribute.new(self, column)

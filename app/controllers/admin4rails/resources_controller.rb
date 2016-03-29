@@ -85,7 +85,7 @@ module Admin4rails
     private
 
     def record_params
-      params.require(:record).permit(resource.permitted_params)
+      params.require(resource.klass.name.underscore.to_sym).permit(resource.permitted_params)
     end
 
     def set_record

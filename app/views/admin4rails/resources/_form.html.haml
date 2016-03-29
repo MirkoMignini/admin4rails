@@ -1,0 +1,11 @@
+= box do
+  = box_body do
+    = simple_form_for(@record) do |f|
+      = f.error_notification
+
+      .form-inputs
+        - @resource.edit_attributes.each do |attribute|
+          = f.input attribute.name.to_sym
+
+      .form-actions
+        = f.button :submit, class: 'btn-primary'

@@ -28,11 +28,15 @@ module Admin4rails
     end
 
     def attributes
-      @attributes || create_attributes
+      @attributes || setup_attributes
+    end
+
+    def edit_attributes
+      attributes.delete_if{|attribute| standard_params.include?(attribute.name.to_sym) }
     end
 
     def permitted_params
-      @attributes.map { |attribute| attribute.name.to_sym } - standard_params
+      attributes.map { |attribute| attribute.name.to_sym } - standard_params
     end
 
     %w(index new edit show).each do |method|
@@ -79,7 +83,7 @@ module Admin4rails
       controller_class.resource = self
     end
 
-    def create_attributes
+    def setup_attributes
       not_implemented
     end
 
