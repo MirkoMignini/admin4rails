@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module Admin4rails
   RSpec.describe 'Show', type: :feature do

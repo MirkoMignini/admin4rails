@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 module Admin4rails
   RSpec.describe 'Resource' do
     let(:post_resource) do
