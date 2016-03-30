@@ -3,7 +3,6 @@ module Admin4rails
     module DataGrid
       module Grid
         def self.included(base)
-          # base.extend ClassMethods
           base.class_eval do
             scope do
               resource.klass

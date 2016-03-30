@@ -19,12 +19,13 @@ module Admin4rails
 
     context 'Content' do
       it 'contains the form' do
-        expect(page).not_to have_selector("#edit_post_#{post.id}[@action='/admin4rails/posts/#{post.id}' and @method='post']")
+        expect(page).to have_selector("#edit_post_#{post.id}[@action='/admin4rails/posts/#{post.id}']")
+        expect(page).to have_selector("#edit_post_#{post.id}[@method='post']")
       end
 
       it 'contains a editable form with standard attributes and value set' do
         expect(page).to have_selector("#post_title[@value='#{post.title}']")
-        expect(page).to have_selector("#post_description", text: post.description)
+        expect(page).to have_selector('#post_description', text: post.description)
       end
 
       it 'hides standard fields' do
@@ -34,7 +35,7 @@ module Admin4rails
       end
 
       it 'contains submit button' do
-        expect(page).not_to have_selector("input[@value='Update Post']")
+        expect(page).to have_selector("input[@value='Update Post']")
       end
     end
   end
