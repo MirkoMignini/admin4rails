@@ -24,8 +24,11 @@ module Admin4rails
 
       it 'contains standard attributes' do
         expect(page).to have_selector('tr td.show_key', text: 'Id')
+        expect(page).to have_selector('tr td.show_value', text: post.id)
         expect(page).to have_selector('tr td.show_key', text: 'Created at')
+        expect(page).to have_selector('tr td.show_value', text: post.created_at)
         expect(page).to have_selector('tr td.show_key', text: 'Updated at')
+        expect(page).to have_selector('tr td.show_value', text: post.updated_at)
       end
 
       it 'contains Post attributes' do

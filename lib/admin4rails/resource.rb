@@ -5,9 +5,9 @@ module Admin4rails
     attr_reader :dsl, :klass
 
     def initialize(resource)
-      init_adapter
       @dsl = resource
       @klass = resource[:class]
+      init_adapter
       create_controller
     end
 
@@ -32,7 +32,7 @@ module Admin4rails
     end
 
     def edit_attributes
-      attributes.delete_if{|attribute| standard_params.include?(attribute.name.to_sym) }
+      attributes.reject { |attribute| standard_params.include?(attribute.name.to_sym) }
     end
 
     def permitted_params
