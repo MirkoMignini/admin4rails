@@ -4,7 +4,7 @@
 
 = box do
   = box_body do
-    NOT IMPLEMENTED
+    = datagrid(@grid)
   = box_footer do
     .pull-right
       = link_to("Create #{@resource.model_name.humanize}", @resource.new_path, class: 'btn btn-primary')

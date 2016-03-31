@@ -14,6 +14,4 @@
 //= require jquery_ujs
 //= require cocoon
 //= require bootstrap-sprockets
-//= require admin4rails/plugins/datatables/jquery.dataTables.min
-//= require admin4rails/plugins/datatables/dataTables.bootstrap.min
 //= require admin4rails/app

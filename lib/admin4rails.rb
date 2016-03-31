@@ -4,10 +4,12 @@ require 'font-awesome-rails'
 require 'jquery-rails'
 require 'sass-rails'
 require 'bootstrap-sass'
-require 'datagrid'
-require 'kaminari'
 require 'simple_form'
 require 'cocoon'
+
+# still needed for assets, to remove when plugin system will work
+require 'datagrid'
+require 'kaminari'
 
 require 'admin4rails/engine'
 require 'admin4rails/router'
@@ -20,6 +22,7 @@ module Admin4rails
       init_resources
       @router = Admin4rails::Router.new(self)
       setup_reloader if Rails.env.development?
+      load_all_plugins
     end
 
     def setup(&block)
@@ -67,6 +70,14 @@ module Admin4rails
 
     def load_all_files
       admin_files.each { |file| load(file) }
+    end
+
+    def plugin_files
+      Dir[File.expand_path('lib/admin4rails/plugins/**/setup.rb', Admin4rails::Engine.root)]
+    end
+
+    def load_all_plugins
+      plugin_files.each { |file| load(file) }
     end
   end
 end

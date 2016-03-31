@@ -4,6 +4,9 @@ Admin4rails.setup do
     adapter! :activerecord
   end
 
+  controller! do
+  end
+
   header! do
     visible! true
     logo! do

@@ -20,14 +20,20 @@ Gem::Specification.new do |s|
   s.add_dependency 'coffee-rails', '~> 4.1.0'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'hamlit'
-  s.add_dependency 'easydsl'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'bootstrap-sass', '~> 3.3.6'
   s.add_dependency 'sass-rails', '~> 5.0'
-  s.add_dependency 'datagrid'
-  s.add_dependency 'kaminari'
+
+  # dsl for configuration
+  s.add_dependency 'easydsl'
+
+  # used in forms
   s.add_dependency 'simple_form'
   s.add_dependency 'cocoon'
+
+  # to remove after plugin system completed
+  s.add_dependency 'datagrid'
+  s.add_dependency 'kaminari'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
