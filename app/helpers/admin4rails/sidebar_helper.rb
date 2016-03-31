@@ -18,18 +18,27 @@ module Admin4rails
     end
 
     def resources(_node)
+      concat(dashboard)
       Admin4rails.resources.each do |res|
         concat(resource(res))
       end
     end
 
-    def resource(res)
-      content_tag(:li) do
-        link_to(res.index_path) do
-          content_tag(:i, class: "fa #{get_icon(res)}") {} +
-            content_tag(:span) { res.model_name.pluralize.humanize }
+    def item(path, icon, text)
+      content_tag(:li, class: ('active' if current_page?(path))) do
+        link_to(path) do
+          content_tag(:i, class: "fa #{icon}") {} +
+            content_tag(:span) { text }
         end
       end
+    end
+
+    def resource(res)
+      item(res.index_path, get_icon(res), res.model_name.pluralize.humanize)
+    end
+
+    def dashboard
+      item(root_path, 'fa-dashboard', 'Dashboard')
     end
   end
 end
