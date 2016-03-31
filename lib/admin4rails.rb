@@ -7,6 +7,7 @@ require 'bootstrap-sass'
 require 'datagrid'
 require 'kaminari'
 require 'simple_form'
+require 'cocoon'
 
 require 'admin4rails/engine'
 require 'admin4rails/router'
