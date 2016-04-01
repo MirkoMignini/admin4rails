@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'simple_form'
   s.add_dependency 'cocoon'
 
-  # to remove after plugin system completed
+  # datagrid and pagination
   s.add_dependency 'datagrid'
   s.add_dependency 'kaminari'
 

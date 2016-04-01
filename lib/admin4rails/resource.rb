@@ -1,4 +1,5 @@
 require 'admin4rails/attribute'
+require 'admin4rails/grid/controller'
 
 module Admin4rails
   class Resource
@@ -9,6 +10,7 @@ module Admin4rails
       @klass = resource[:class]
       init_adapter
       create_controller
+      Admin4rails::Grid::Controller.create_controller(self)
     end
 
     def model_name

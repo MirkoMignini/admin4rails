@@ -6,8 +6,6 @@ require 'sass-rails'
 require 'bootstrap-sass'
 require 'simple_form'
 require 'cocoon'
-
-# still needed for assets, to remove when plugin system will work
 require 'datagrid'
 require 'kaminari'
 

@@ -6,21 +6,23 @@ module Admin4rails
     before_action :set_record, only: [:show, :edit, :update, :destroy]
 
     def index
-      if Admin4rails.dsl.controller.index_proc?
-        Admin4rails.dsl.controller.index_proc.call(self, resource, params)
-      else
-        @records = resource.all
-        unless Admin4rails.dsl.controller.index_file?
-          respond_to do |format|
-            format.html
-            format.json { render json: resource.all }
-          end
-        end
-      end
+      # if Admin4rails.dsl.controller.index?
+      #  Admin4rails.dsl.controller.index.call(self, resource, params)
+      # else
+      # @records = resource.all
 
-      if Admin4rails.dsl.controller.index_file?
-        render(file: Admin4rails.dsl.controller.index_file)
+      # unless Admin4rails.dsl.controller.index_file?
+      @grid = Admin4rails::Grid::Controller.grid(resource, params)
+      respond_to do |format|
+        format.html
+        format.json { render json: resource.all }
       end
+      # end
+      # end
+
+      # if Admin4rails.dsl.controller.index_file?
+      #  render(file: Admin4rails.dsl.controller.index_file)
+      # end
     end
 
     def show

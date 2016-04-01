@@ -2,8 +2,8 @@ module Admin4rails
   module SidebarHelper
     def sidebar
       content_tag(:ul, class: 'sidebar-menu') do
-        Admin4rails.sidebar.layout.all_nodes.each do |node|
-          case node.name.to_s
+        Admin4rails.sidebar.layout.get_all_nodes.each do |node|
+          case node.get_name.to_s
           when 'header' then concat(header(node))
           when 'resources' then resources(node)
           end

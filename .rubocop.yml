@@ -44,3 +44,6 @@ Documentation:
 
 Rails:
   Enabled: true
+
+Metrics/ModuleLength:
+  Max: 200
