@@ -6,23 +6,14 @@ module Admin4rails
     before_action :set_record, only: [:show, :edit, :update, :destroy]
 
     def index
-      # if Admin4rails.dsl.controller.index?
-      #  Admin4rails.dsl.controller.index.call(self, resource, params)
-      # else
-      # @records = resource.all
-
-      # unless Admin4rails.dsl.controller.index_file?
+      if dsl.controller.index? && dsl.controller.index.override?
+        return instance_eval(&dsl.controller.index.override)
+      end
 
       respond_to do |format|
         format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
         format.json { render json: resource.all }
       end
-      # end
-      # end
-
-      # if Admin4rails.dsl.controller.index_file?
-      #  render(file: Admin4rails.dsl.controller.index_file)
-      # end
     end
 
     def show
@@ -70,6 +61,10 @@ module Admin4rails
     end
 
     private
+
+    def dsl
+      Admin4rails.dsl
+    end
 
     def record_params
       params.require(resource.klass.name.underscore.to_sym).permit(resource.permitted_params)
