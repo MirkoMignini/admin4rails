@@ -1,0 +1,1 @@
+Admin4rails.initialize!

@@ -12,9 +12,9 @@ module Admin4rails
       # @records = resource.all
 
       # unless Admin4rails.dsl.controller.index_file?
-      @grid = Admin4rails::Grid::Controller.grid(resource, params)
+
       respond_to do |format|
-        format.html
+        format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
         format.json { render json: resource.all }
       end
       # end

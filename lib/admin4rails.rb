@@ -24,18 +24,20 @@ module Admin4rails
     end
 
     def setup(&block)
-      @dsl = Easydsl.define(&block)
+      dsl.define(&block)
     end
 
     def method_missing(method_symbol, *args)
-      @dsl.send(method_symbol, args)
+      dsl.send(method_symbol, args)
     end
 
     def setup_routes!
       @router.setup_routes! if @router
     end
 
-    attr_reader :dsl
+    def dsl
+      @dsl ||= Easydsl.define {}
+    end
 
     def resources
       @resources ||= []

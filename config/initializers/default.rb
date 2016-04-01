@@ -22,12 +22,4 @@ Admin4rails.setup do
       resources
     end
   end
-
-  resource class: Post do
-    icon! 'fa-table'
-  end
-
-  resource class: Comment
 end
-
-Admin4rails.initialize!
