@@ -13,9 +13,9 @@ Admin4rails.setup do
 
   controller do
     index do
-      #override lambda { |sender|
+      # override lambda { |sender|
       #  @grid = Admin4rails::Grid::Controller.grid(resource, params)
-      #}
+      # }
     end
   end
 

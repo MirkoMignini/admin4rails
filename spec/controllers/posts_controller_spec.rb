@@ -15,7 +15,7 @@ module Admin4rails
       end
 
       it 'renders template' do
-        # expect(response).to render_template('index')
+        expect(response).to render_template('index')
       end
 
       it 'assigns the resource to controller' do
@@ -157,6 +157,37 @@ module Admin4rails
       context 'when requested post does not exists' do
         it 'throws ActiveRecord::RecordNotFound' do
           expect { delete :destroy, id: -1 }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    describe 'Customizations' do
+      context '#index' do
+        context 'Global' do
+          it 'overrides' do
+            Admin4rails.dsl.controller do
+              index { override ->(_sender) { render(text: 'Global Index override') } }
+            end
+            get(:index)
+            expect(response).not_to render_template('index')
+            expect(response.body).to eq('Global Index override')
+            Admin4rails.dsl.controller.get_nodes[:index].clear
+          end
+        end
+
+        context 'Local' do
+          it 'overrides' do
+            resource = Admin4rails.dsl.resources.select { |res| res[:class] == Post }.first
+            resource.define do
+              controller do
+                index { override ->(_sender) { render(text: 'Local Index override') } }
+              end
+            end
+            get(:index)
+            expect(response).not_to render_template('index')
+            expect(response.body).to eq('Local Index override')
+            resource.controller.get_nodes[:index].clear
+          end
         end
       end
     end

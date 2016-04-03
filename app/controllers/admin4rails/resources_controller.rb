@@ -10,6 +10,10 @@ module Admin4rails
         return instance_eval(&dsl.controller.index.override)
       end
 
+      if resource.dsl.controller? && resource.dsl.controller.index? && resource.dsl.controller.index.override?
+        return instance_eval(&resource.dsl.controller.index.override)
+      end
+
       respond_to do |format|
         format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
         format.json { render json: resource.all }

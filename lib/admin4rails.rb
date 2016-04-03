@@ -39,6 +39,8 @@ module Admin4rails
       @dsl ||= Easydsl.define {}
     end
 
+    attr_writer :dsl
+
     def resources
       @resources ||= []
     end

@@ -5,6 +5,8 @@ Admin4rails.setup do
   end
 
   controller! do
+    index! do
+    end
   end
 
   header! do
