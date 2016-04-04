@@ -5,20 +5,20 @@ module Admin4rails
     before_action :set_resource
 
     def index
-      return if handle_event(:index, :override)
+      return if handle_event('index_override')
 
-      handle_event(:index, :before)
-      unless handle_event(:index, :render)
+      handle_event('index_before')
+      unless handle_event('index_render')
         respond_to do |format|
           format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
           format.json { render(json: resource.all) }
         end
       end
-      handle_event(:index, :after)
+      handle_event('index_after')
     end
 
     def show
-      return if handle_event(:show, :override)
+      return if handle_event('show_override')
 
       handle_event(:show, :before)
       set_record
@@ -26,28 +26,28 @@ module Admin4rails
     end
 
     def edit
-      return if handle_event(:edit, :override)
+      return if handle_event('edit_override')
 
-      handle_event(:edit, :before)
+      handle_event('edit_before')
       set_record
-      handle_event(:edit, :after)
+      handle_event('edit_after')
     end
 
     def new
-      return if handle_event(:new, :override)
+      return if handle_event(':new_override')
 
-      handle_event(:new, :before)
+      handle_event('new_before')
       @record = resource.klass.new
-      handle_event(:new, :after)
+      handle_event('new_after')
     end
 
     def create
-      return if handle_event(:create, :override)
+      return if handle_event('create_override')
 
-      handle_event(:create, :before)
+      handle_event('create_before')
       @record = resource.klass.create(record_params)
       saved = @record.save
-      unless handle_event(:create, :render, saved: saved)
+      unless handle_event('create_render', saved: saved)
         respond_to do |format|
           if saved
             format.html { redirect_to(@record, saved: 'Record was successfully created.') }
@@ -58,17 +58,17 @@ module Admin4rails
           end
         end
       end
-      handle_event(:create, :after)
+      handle_event('create_after')
     end
 
     def update
-      return if handle_event(:update, :override)
+      return if handle_event('update_override')
 
-      handle_event(:update, :before)
+      handle_event('update_before')
       set_record
       @record.update(record_params)
       saved = @record.save
-      unless handle_event(:update, :render, saved: saved)
+      unless handle_event('update_render', saved: saved)
         respond_to do |format|
           if saved
             format.html { redirect_to(@record, notice: 'Record was successfully updated.') }
@@ -79,22 +79,22 @@ module Admin4rails
           end
         end
       end
-      handle_event(:update, :after)
+      handle_event('update_after')
     end
 
     def destroy
-      return if handle_event(:destroy, :override)
+      return if handle_event('destroy_override')
 
-      handle_event(:destroy, :before)
+      handle_event('destroy_before')
       set_record
       @record.destroy
-      unless handle_event(:destroy, :render)
+      unless handle_event('destroy_render')
         respond_to do |format|
           format.html { redirect_to(resource.index_path, notice: 'Record was successfully destroyed.') }
           format.json { head(:no_content) }
         end
       end
-      handle_event(:destroy, :after)
+      handle_event('destroy_after')
     end
 
     private
@@ -104,7 +104,7 @@ module Admin4rails
     end
 
     def set_record
-      return if handle_event(:set_record, :override)
+      return if handle_event('set_record_override')
 
       @record = resource.klass.find(params[:id])
     end
@@ -113,16 +113,8 @@ module Admin4rails
       @resource = resource
     end
 
-    def handle_event(method_sym, event_sym, *args)
-      [Admin4rails, resource].each do |parent|
-        dsl = parent.dsl
-        next unless dsl.controller?
-        next unless dsl.controller.send(:"#{method_sym}?")
-        next unless dsl.controller.send(method_sym).send(:"#{event_sym}?")
-        value = instance_eval(&dsl.controller.send(method_sym).send(event_sym, args))
-        return event_sym == :override ? true : value
-      end
-      false
+    def handle_event(event, *args)
+      resource.handle_event(self, event, args)
     end
   end
 end

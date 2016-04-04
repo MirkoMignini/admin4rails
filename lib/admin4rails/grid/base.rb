@@ -11,15 +11,19 @@ module Admin4rails
         def setup_scope(base)
           base.class_eval do
             scope do
-              resource.klass
+              resource.klass unless resource.handle_event(self, 'scope')
             end
           end
         end
 
         def setup_columns(base)
           base.class_eval do
-            resource.attributes.each do |attribute|
-              column(attribute.name.to_sym)
+            unless resource.handle_event(self, 'columns')
+              resource.handle_event(self, 'columns_prepend')
+              resource.attributes.each do |attribute|
+                column(attribute.name.to_sym)
+              end
+              resource.handle_event(self, 'columns_append')
             end
           end
         end

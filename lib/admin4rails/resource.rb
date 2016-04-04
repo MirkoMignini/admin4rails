@@ -56,6 +56,16 @@ module Admin4rails
       end
     end
 
+    def handle_event(base, event_symbol, *args)
+      [self, Admin4rails].each do |obj|
+        cdsl = obj.dsl
+        next unless cdsl.events?
+        next unless cdsl.events.send(:"#{event_symbol}?")
+        return base.instance_eval(&cdsl.events.send(event_symbol, args))
+      end
+      false
+    end
+
     private
 
     def init_adapter
