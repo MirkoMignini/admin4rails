@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %title= Admin4rails.config.title
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}/
+    = stylesheet_link_tag    "admin4rails/application", media: "all"
+    = javascript_include_tag "admin4rails/application"
+    = csrf_meta_tags
+  %body.hold-transition.login-page
+    = yield
