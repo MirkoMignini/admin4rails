@@ -7,6 +7,11 @@ module Admin4rails
     let(:posts) { create_list(:post, 4) }
     let(:post_object) { posts[rand 4] }
 
+    before(:each) do
+      @request.env['devise.mapping'] = Devise.mappings[:admin]
+      sign_in FactoryGirl.create(:admin_user)
+    end
+
     describe '#index' do
       before(:each) { get(:index) }
 

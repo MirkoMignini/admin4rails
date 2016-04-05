@@ -4,6 +4,11 @@ module Admin4rails
   RSpec.describe PostsController, type: :controller do
     routes { Admin4rails::Engine.routes }
 
+    before(:each) do
+      @request.env['devise.mapping'] = Devise.mappings[:admin]
+      sign_in FactoryGirl.create(:admin_user)
+    end
+
     describe 'Events' do
       let(:resource) { Admin4rails.dsl.resources.select { |res| res[:class] == Post }.first }
 

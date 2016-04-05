@@ -3,6 +3,7 @@ require 'rails_helper'
 module Admin4rails
   RSpec.describe 'Index', type: :feature do
     before(:example) do
+      login_as(FactoryGirl.create(:admin_user), scope: :admin_user)
       visit Admin4rails::Engine.routes.url_helpers.posts_path
     end
 

@@ -7,6 +7,7 @@ module Admin4rails
     end
 
     before(:example) do
+      login_as(FactoryGirl.create(:admin_user), scope: :admin_user)
       visit Admin4rails::Engine.routes.url_helpers.post_path(post.id)
     end
 

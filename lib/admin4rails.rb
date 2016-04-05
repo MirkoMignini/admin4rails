@@ -8,6 +8,7 @@ require 'simple_form'
 require 'cocoon'
 require 'datagrid'
 require 'kaminari'
+require 'devise'
 
 require 'admin4rails/engine'
 require 'admin4rails/router'
