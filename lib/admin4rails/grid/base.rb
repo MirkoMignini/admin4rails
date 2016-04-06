@@ -20,7 +20,16 @@ module Admin4rails
           base.class_eval do
             unless resource.handle_event(self, 'columns')
               resource.handle_event(self, 'columns_prepend')
-              resource.attributes.each do |attribute|
+              attributes = []
+              if resource.dsl.index? && resource.dsl.index.fields?
+                resource.dsl.index.fields.each do |field|
+                  results = resource.attributes.select { |attribute| attribute.name.to_sym == field}
+                  attributes << results.first if results.count > 0
+                end
+              else
+                attributes = resource.attributes
+              end
+              attributes.each do |attribute|
                 column(attribute.name.to_sym)
               end
               resource.handle_event(self, 'columns_append')

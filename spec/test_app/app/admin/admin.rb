@@ -4,5 +4,9 @@ Admin4rails.setup do
   end
 
   resource class: Comment
-  resource class: AdminUser
+  resource class: AdminUser do
+    index do
+      fields [:name, :surname, :email, :last_sign_in_at, :sign_in_count]
+    end
+  end
 end
