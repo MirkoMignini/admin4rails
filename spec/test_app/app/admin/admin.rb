@@ -4,4 +4,5 @@ Admin4rails.setup do
   end
 
   resource class: Comment
+  resource class: AdminUser
 end

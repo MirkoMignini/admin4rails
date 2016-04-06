@@ -7,7 +7,11 @@ module Admin4rails
     end
 
     config.to_prepare do
-      #Devise::SessionsController.layout 'devise'
+      Devise::SessionsController.layout 'admin4rails/devise'
+    end
+
+    config.after_initialize do
+      Admin4rails.initialize!
     end
   end
 end

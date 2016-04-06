@@ -1,43 +1,22 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "devise/shared/links"
-
 .login-box
   .login-logo
-    %a{:href => "../../index2.html"}
-      %b> Admin
-      LTE
+    = Admin4rails.header.logo.text.html_safe
   .login-box-body
     %p.login-box-msg Sign in to start your session
-    %form{:action => "../../index2.html", :method => "post"}
+    = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      = render partial: 'layouts/admin4rails/devise_messages'
       .form-group.has-feedback
-        %input.form-control{:placeholder => "Email", :type => "email"}
-          %span.glyphicon.glyphicon-envelope.form-control-feedback
+        = f.input_field :email, class: 'form-control', placeholder: 'Email', type: 'email'
+        %span.add-on>
+          .glyphicon.glyphicon-envelope.form-control-feedback
       .form-group.has-feedback
-        %input.form-control{:placeholder => "Password", :type => "password"}
-          %span.glyphicon.glyphicon-lock.form-control-feedback
+        = f.input_field :password, class: 'form-control', placeholder: 'Password', type: 'password'
+        %span.add-on>
+          .glyphicon.glyphicon-lock.form-control-feedback
       .row
         .col-xs-8
-          .checkbox.icheck
-            %label
-              %input{:type => "checkbox"}
-                Remember Me
+          - if devise_mapping.rememberable?
+            = f.input :remember_me, inline_label: 'Remember me', as: :boolean
         .col-xs-4
-          %button.btn.btn-primary.btn-block.btn-flat{:type => "submit"} Sign In
-    %a{:href => "#"} I forgot my password
-    %br
-      %a.text-center{:href => "register.html"} Register a new membership
+          = f.submit 'Log in', class: 'btn btn-primary btn-block btn-flat'
+    = render "devise/shared/links"
