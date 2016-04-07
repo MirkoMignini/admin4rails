@@ -4,9 +4,21 @@ Admin4rails.setup do
   end
 
   resource class: Comment
+
   resource class: AdminUser do
+    icon 'fa-user-md'
     index do
       fields [:name, :surname, :email, :last_sign_in_at, :sign_in_count]
+    end
+    show do
+      fields %w(name surname email sign_in_count current_sign_in_at
+                last_sign_in_at last_sign_in_ip created_at)
+    end
+    new_form do
+      fields [:name, :surname, :email, :password]
+    end
+    edit_form do
+      fields [:name, :surname, :email]
     end
   end
 end
