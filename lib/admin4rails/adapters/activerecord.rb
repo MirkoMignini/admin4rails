@@ -7,6 +7,7 @@ module Admin4rails
 
       def setup_attributes
         @attributes = []
+        # @attributes = ActiveSupport::HashWithIndifferentAccess.new
         @klass.columns.each do |column|
           @attributes << Attribute.new(self, column)
         end

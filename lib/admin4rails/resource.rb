@@ -1,4 +1,5 @@
 require 'admin4rails/attribute'
+require 'admin4rails/utility'
 require 'admin4rails/grid/controller'
 
 module Admin4rails
@@ -33,8 +34,21 @@ module Admin4rails
       @attributes || setup_attributes
     end
 
+    def attribute(name)
+      attributes.find { |item| Admin4rails::Utility.compare(item.name, name) }
+    end
+
     def edit_attributes
       attributes.reject { |attribute| standard_params.include?(attribute.name.to_sym) }
+    end
+
+    def filter_attributes(fields)
+      results = []
+      fields.each do |field|
+        result = attribute(field)
+        results << result unless result.nil?
+      end
+      results
     end
 
     def permitted_params

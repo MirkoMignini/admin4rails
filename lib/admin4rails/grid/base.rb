@@ -17,23 +17,21 @@ module Admin4rails
         end
 
         def setup_columns(base)
+          attributes = get_attributes(base.resource)
           base.class_eval do
             unless resource.handle_event(self, 'columns')
               resource.handle_event(self, 'columns_prepend')
-              attributes = []
-              if resource.dsl.index? && resource.dsl.index.fields?
-                resource.dsl.index.fields.each do |field|
-                  results = resource.attributes.select { |attribute| attribute.name.to_sym == field}
-                  attributes << results.first if results.count > 0
-                end
-              else
-                attributes = resource.attributes
-              end
-              attributes.each do |attribute|
-                column(attribute.name.to_sym)
-              end
+              attributes.each { |attribute| column(attribute.name.to_sym) }
               resource.handle_event(self, 'columns_append')
             end
+          end
+        end
+
+        def get_attributes(resource)
+          if resource.dsl.index? && resource.dsl.index.fields?
+            resource.filter_attributes(resource.dsl.index.fields)
+          else
+            resource.attributes
           end
         end
 

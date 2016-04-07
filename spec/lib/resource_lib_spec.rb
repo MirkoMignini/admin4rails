@@ -67,6 +67,12 @@ module Admin4rails
           expect(post_resource.attributes.count).to be > 0
         end
 
+        it 'get attributes by name' do
+          expect(post_resource.attribute(:id)).not_to be_nil
+          expect(post_resource.attribute('id')).not_to be_nil
+          expect(post_resource.attribute(:abc)).to be_nil
+        end
+
         context 'Check post title attribute' do
           it 'checks if attribute exists' do
             expect(post_title_attribute).not_to be_nil
@@ -78,6 +84,15 @@ module Admin4rails
             expect(post_title_attribute.name).to eq('title')
             expect(post_title_attribute.display_text).to eq('Title')
           end
+        end
+      end
+
+      describe 'Filter attributes' do
+        it 'filters attributes' do
+          attributes = post_resource.filter_attributes([:description, :title])
+          expect(attributes.count).to eq(2)
+          expect(attributes.first.name).to eq('description')
+          expect(attributes.last.name).to eq('title')
         end
       end
 
