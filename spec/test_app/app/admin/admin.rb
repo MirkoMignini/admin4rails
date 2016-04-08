@@ -15,7 +15,8 @@ Admin4rails.setup do
                 last_sign_in_at last_sign_in_ip created_at)
     end
     new_form do
-      fields [:name, :surname, :email, :password]
+      custom 'admin_user/new_fields'
+      permitted_params [:name, :surname, :email, :password, :password_confirmation]
     end
     edit_form do
       fields [:name, :surname, :email]

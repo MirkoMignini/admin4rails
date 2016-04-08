@@ -51,8 +51,14 @@ module Admin4rails
       results
     end
 
-    def permitted_params
-      attributes.map { |attribute| attribute.name.to_sym } - standard_params
+    def attributes_or_default(node, default)
+      return filter_attributes(node.fields) if !node.nil? && node.fields?
+      default
+    end
+
+    def permitted_params(fields = nil)
+      list = fields.nil? ? attributes : fields
+      list.map { |attribute| attribute.name.to_sym } - standard_params
     end
 
     %w(index new edit show).each do |method|

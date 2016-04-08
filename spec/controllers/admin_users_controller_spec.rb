@@ -34,5 +34,17 @@ module Admin4rails
         expect(assigns(:resource).dsl.index.fields).to eq([:name, :surname, :email, :last_sign_in_at, :sign_in_count])
       end
     end
+
+    describe '#show' do
+      before(:each) { get(:show, id: admin_user.id) }
+
+      it 'success' do
+        expect(response).to be_success
+      end
+
+      it 'assigns the right attributes' do
+        expect(assigns(:attributes).count).to eq(8)
+      end
+    end
   end
 end

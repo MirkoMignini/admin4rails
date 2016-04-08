@@ -4,8 +4,7 @@
       = f.error_notification
 
       .form-inputs
-        - @resource.edit_attributes.each do |attribute|
-          = f.input attribute.name.to_sym
+        = form_fields(f)
 
       .form-actions
         = f.button :submit, class: 'btn-primary'

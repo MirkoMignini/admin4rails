@@ -21,6 +21,7 @@ module Admin4rails
       return if handle_event('show_override')
 
       handle_event(:show, :before)
+      set_attributes(:show, resource.attributes)
       set_record
       handle_event(:show, :after)
     end
@@ -29,14 +30,18 @@ module Admin4rails
       return if handle_event('edit_override')
 
       handle_event('edit_before')
+      @form_type = :edit_form
+      set_attributes(:edit_form, resource.edit_attributes)
       set_record
       handle_event('edit_after')
     end
 
     def new
-      return if handle_event(':new_override')
+      return if handle_event('new_override')
 
       handle_event('new_before')
+      @form_type = :new_form
+      set_attributes(:new_form, resource.edit_attributes)
       @record = resource.klass.new
       handle_event('new_after')
     end
@@ -45,7 +50,8 @@ module Admin4rails
       return if handle_event('create_override')
 
       handle_event('create_before')
-      @record = resource.klass.create(record_params)
+      set_attributes(:new_form, resource.edit_attributes)
+      @record = resource.klass.create(record_params(:new_form))
       saved = @record.save
       unless handle_event('create_render', saved: saved)
         respond_to do |format|
@@ -66,7 +72,8 @@ module Admin4rails
 
       handle_event('update_before')
       set_record
-      @record.update(record_params)
+      set_attributes(:edit_form, resource.edit_attributes)
+      @record.update(record_params(:edit_form))
       saved = @record.save
       unless handle_event('update_render', saved: saved)
         respond_to do |format|
@@ -99,13 +106,22 @@ module Admin4rails
 
     private
 
-    def record_params
-      params.require(resource.klass.name.underscore.to_sym).permit(resource.permitted_params)
+    def record_params(method_symbol)
+      permitted_params = if resource.dsl.send("#{method_symbol}?".to_sym) &&
+          resource.dsl.send(method_symbol).permitted_params?
+        resource.dsl.send(method_symbol).permitted_params
+      else
+        resource.permitted_params(@attributes)
+      end
+      params.require(resource.klass.name.underscore.to_sym).permit(permitted_params)
+    end
+
+    def set_attributes(method, default)
+      @attributes = resource.attributes_or_default(resource.dsl.send(method), default)
     end
 
     def set_record
       return if handle_event('set_record_override')
-
       @record = resource.klass.find(params[:id])
     end
 

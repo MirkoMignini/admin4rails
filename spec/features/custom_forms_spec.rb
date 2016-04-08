@@ -48,16 +48,11 @@ module Admin4rails
         visit Admin4rails::Engine.routes.url_helpers.admin_user_path(admin_user.id)
 
         expect(page).not_to have_selector('tr td.show_key', text: 'Id')
-        expect(page).not_to have_selector('tr td.show_value', text: admin_user.id)
         expect(page).not_to have_selector('tr td.show_key', text: 'Updated at')
-        expect(page).not_to have_selector('tr td.show_value', text: admin_user.updated_at)
 
         expect(page).to have_selector('tr td.show_key', text: 'Created at')
-        expect(page).to have_selector('tr td.show_value', text: admin_user.created_at)
         expect(page).to have_selector('tr td.show_key', text: 'Name')
-        expect(page).to have_selector('tr td.show_value', text: admin_user.name)
         expect(page).to have_selector('tr td.show_key', text: 'Surname')
-        expect(page).to have_selector('tr td.show_value', text: admin_user.surname)
       end
     end
   end
