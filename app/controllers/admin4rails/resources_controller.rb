@@ -1,136 +1,107 @@
 require_dependency 'admin4rails/application_controller'
+require 'admin4rails/grid/controller'
 
 module Admin4rails
   class ResourcesController < ApplicationController
     before_action :set_resource
 
     def index
-      return if handle_event('index_override')
+      setup_grid
 
-      handle_event('index_before')
-      unless handle_event('index_render')
-        respond_to do |format|
-          format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
-          format.json { render(json: resource.all) }
-        end
+      respond_to do |format|
+        format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
+        format.json { render(json: resource.all) }
       end
-      handle_event('index_after')
     end
 
     def show
-      return if handle_event('show_override')
-
-      handle_event(:show, :before)
-      set_attributes(:show, resource.attributes)
+      @attributes = resource.filter_attributes(show_fields)
       set_record
-      handle_event(:show, :after)
     end
 
     def edit
-      return if handle_event('edit_override')
-
-      handle_event('edit_before')
-      @form_type = :edit_form
-      set_attributes(:edit_form, resource.edit_attributes)
+      @form_type = :edit
+      @attributes = resource.filter_attributes(edit_fields)
       set_record
-      handle_event('edit_after')
     end
 
     def new
-      return if handle_event('new_override')
-
-      handle_event('new_before')
-      @form_type = :new_form
-      set_attributes(:new_form, resource.edit_attributes)
+      @form_type = :new
+      @attributes = resource.filter_attributes(new_fields)
       @record = resource.klass.new
-      handle_event('new_after')
     end
 
     def create
-      return if handle_event('create_override')
-
-      handle_event('create_before')
-      set_attributes(:new_form, resource.edit_attributes)
-      @record = resource.klass.create(record_params(:new_form))
-      saved = @record.save
-      unless handle_event('create_render', saved: saved)
-        respond_to do |format|
-          if saved
-            format.html { redirect_to(@record, saved: 'Record was successfully created.') }
-            format.json { render(:show, status: :created, location: @record) }
-          else
-            format.html { render(:new) }
-            format.json { render(json: @record.errors, status: :unprocessable_entity) }
-          end
+      @attributes = resource.filter_attributes(new_fields)
+      @record = resource.klass.create(create_params)
+      respond_to do |format|
+        if @record.save
+          format.html { redirect_to(@record, saved: 'Record was successfully created.') }
+          format.json { render(:show, status: :created, location: @record) }
+        else
+          format.html { render(:new) }
+          format.json { render(json: @record.errors, status: :unprocessable_entity) }
         end
       end
-      handle_event('create_after')
     end
 
     def update
-      return if handle_event('update_override')
-
-      handle_event('update_before')
       set_record
-      set_attributes(:edit_form, resource.edit_attributes)
-      @record.update(record_params(:edit_form))
-      saved = @record.save
-      unless handle_event('update_render', saved: saved)
-        respond_to do |format|
-          if saved
-            format.html { redirect_to(@record, notice: 'Record was successfully updated.') }
-            format.json { render(:show, status: :ok, location: @record) }
-          else
-            format.html { render(:edit) }
-            format.json { render(json: @record.errors, status: :unprocessable_entity) }
-          end
+      @attributes = resource.filter_attributes(edit_fields)
+      @record.update(update_params)
+      respond_to do |format|
+        if @record.save
+          format.html { redirect_to(@record, notice: 'Record was successfully updated.') }
+          format.json { render(:show, status: :ok, location: @record) }
+        else
+          format.html { render(:edit) }
+          format.json { render(json: @record.errors, status: :unprocessable_entity) }
         end
       end
-      handle_event('update_after')
     end
 
     def destroy
-      return if handle_event('destroy_override')
-
-      handle_event('destroy_before')
       set_record
       @record.destroy
-      unless handle_event('destroy_render')
-        respond_to do |format|
-          format.html { redirect_to(resource.index_path, notice: 'Record was successfully destroyed.') }
-          format.json { head(:no_content) }
-        end
+      respond_to do |format|
+        format.html { redirect_to(resource.index_path, notice: 'Record was successfully destroyed.') }
+        format.json { head(:no_content) }
       end
-      handle_event('destroy_after')
     end
 
     private
 
-    def record_params(method_symbol)
-      permitted_params = if resource.dsl.send("#{method_symbol}?".to_sym) &&
-          resource.dsl.send(method_symbol).permitted_params?
-        resource.dsl.send(method_symbol).permitted_params
-      else
-        resource.permitted_params(@attributes)
-      end
-      params.require(resource.klass.name.underscore.to_sym).permit(permitted_params)
+    def new_fields
+      resource.edit_attributes.map(&:name)
     end
 
-    def set_attributes(method, default)
-      @attributes = resource.attributes_or_default(resource.dsl.send(method), default)
+    def edit_fields
+      resource.edit_attributes.map(&:name)
+    end
+
+    def show_fields
+      resource.attributes.map(&:name)
+    end
+
+    def setup_grid
+      unless Utility.module_exists?(Admin4rails::Grid::Controller.grid_controller_name(resource))
+        Admin4rails::Grid::Controller.create_controller(resource)
+      end
+    end
+
+    %w(create_params update_params).each do |method_name|
+      define_method(method_name) do |*args|
+        permitted_params = resource.permitted_params(@attributes)
+        params.require(resource.klass.name.underscore.to_sym).permit(permitted_params)
+      end
     end
 
     def set_record
-      return if handle_event('set_record_override')
       @record = resource.klass.find(params[:id])
     end
 
     def set_resource
       @resource = resource
-    end
-
-    def handle_event(event, *args)
-      resource.handle_event(self, event, args)
     end
   end
 end

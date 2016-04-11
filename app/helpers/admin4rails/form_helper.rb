@@ -1,8 +1,9 @@
 module Admin4rails
   module FormHelper
     def form_fields(form)
-      if @resource.dsl.send("#{@form_type}?".to_sym) && @resource.dsl.send(@form_type).custom?
-        render(partial: @resource.dsl.send(@form_type).custom, locals: { f: form })
+      fields_partial = @resource.view_partial(@form_type.to_s, 'fields')
+      if lookup_context.template_exists?(fields_partial, nil, true)
+        render(partial: fields_partial, locals: { f: form })
       else
         capture do
           @attributes.each do |attribute|

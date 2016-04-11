@@ -6,5 +6,14 @@ module Admin4rails
       return x.to_sym == y if x.is_a?(String) && y.is_a?(Symbol)
       raise ArgumentError, 'Wrong arguments type'
     end
+
+    def self.module_exists?(module_name)
+      begin
+        Admin4rails::const_get "#{module_name}"
+        true
+      rescue NameError
+        false
+      end
+    end
   end
 end

@@ -1,6 +1,5 @@
 require 'admin4rails/attribute'
 require 'admin4rails/utility'
-require 'admin4rails/grid/controller'
 
 module Admin4rails
   class Resource
@@ -11,7 +10,6 @@ module Admin4rails
       @klass = resource[:class]
       init_adapter
       create_controller
-      Admin4rails::Grid::Controller.create_controller(self)
     end
 
     def model_name
@@ -23,7 +21,7 @@ module Admin4rails
     end
 
     def controller_class
-      Admin4rails.const_get("Admin4rails::#{controller_name}")
+      Admin4rails.const_get("#{controller_name}")
     end
 
     def all
@@ -76,14 +74,8 @@ module Admin4rails
       end
     end
 
-    def handle_event(base, event_symbol, *args)
-      [self, Admin4rails].each do |obj|
-        cdsl = obj.dsl
-        next unless cdsl.events?
-        next unless cdsl.events.send(:"#{event_symbol}?")
-        return base.instance_eval(&cdsl.events.send(event_symbol, args))
-      end
-      false
+    def view_partial(method, part)
+      "#{model_name.underscore}/#{method}_#{part}"
     end
 
     private
@@ -106,8 +98,11 @@ module Admin4rails
     end
 
     def create_controller
+      included_module = "include ::#{controller_name}" if Utility.module_exists?("::#{controller_name}")
+
       eval "
         class Admin4rails::#{controller_name} < ResourcesController
+          #{included_module}
           def self.resource=(res); @@resource = res end
           def resource; @@resource end
         end

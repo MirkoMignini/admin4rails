@@ -29,10 +29,6 @@ module Admin4rails
       it 'assigns posts to grid object' do
         expect(assigns(:grid)).not_to be_nil
       end
-
-      it 'has custom fields' do
-        expect(assigns(:resource).dsl.index.fields).to eq([:name, :surname, :email, :last_sign_in_at, :sign_in_count])
-      end
     end
 
     describe '#show' do

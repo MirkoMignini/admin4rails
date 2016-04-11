@@ -16,28 +16,31 @@ module Admin4rails
         end
 
         def grid_controller(resource)
-          Admin4rails.const_get("Admin4rails::#{resource.model_name.pluralize}Grid")
+          Admin4rails.const_get(grid_controller_name(resource))
+        end
+
+        def grid_controller_name(resource)
+          "#{resource.model_name.pluralize}Grid"
         end
 
         private
 
         def setup_controller_ancestor(resource)
-          grid_ancestor = "Admin4rails::#{resource.model_name.pluralize}GridAncestor"
-          eval "
-            class #{grid_ancestor}
-              def self.resource=(res); @@resource = res end
-              def self.resource; @@resource end
-              def resource; @@resource end
-            end
-          "
+          grid_ancestor = "Admin4rails::#{grid_controller_name(resource)}Ancestor"
+          eval "class #{grid_ancestor} < GridParent; end"
           Admin4rails.const_get(grid_ancestor).resource = resource
           grid_ancestor
         end
 
         def setup_controller(resource, grid_ancestor)
-          grid_controller = "Admin4rails::#{resource.model_name.pluralize}Grid"
+          if Utility.module_exists?("::#{grid_controller_name(resource)}Controller")
+            included_module = "extend ::#{grid_controller_name(resource)}Controller"
+          end
+
+          grid_controller = "Admin4rails::#{grid_controller_name(resource)}"
           eval "
             class #{grid_controller} < #{grid_ancestor}
+              #{included_module}
               include Datagrid
               include Admin4rails::Grid::Base
             end
