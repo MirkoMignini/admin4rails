@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Admin4rails::VERSION
   s.authors     = ['Mirko Mignini']
   s.email       = ['mirko.mignini@gmail.com']
-  s.homepage    = 'TODO'
-  s.summary     = 'TODO: Summary of Admin4rails.'
-  s.description = 'TODO: Description of Admin4rails.'
+  s.homepage    = 'https://github.com/MirkoMignini/admin4rails'
+  s.summary     = 'Yet another administrator / backend framework for rails'
+  s.description = 'Yet another administrator / backend framework for rails'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']

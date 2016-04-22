@@ -1,3 +1,3 @@
-= Admin4rails
+# Admin4rails
 
-This project rocks and uses MIT-LICENSE.
+Yet another administrator / backend framework for rails
