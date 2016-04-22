@@ -38,14 +38,14 @@ module Admin4rails
 
         def grid_actions
           column('', html: true) do |record|
-            render partial: 'datagrid/dropdown_actions', locals: { record: record, resource: @resource }
+            render partial: 'datagrid/dropdown_actions', locals: { record: record, resource: @@resource }
           end
         end
       end
 
-      def resource
-        @@resource
-      end
+      # def resource
+      #   @@resource
+      # end
     end
   end
 end

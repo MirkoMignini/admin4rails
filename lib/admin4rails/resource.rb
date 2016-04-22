@@ -21,7 +21,7 @@ module Admin4rails
     end
 
     def controller_class
-      Admin4rails.const_get("#{controller_name}")
+      Admin4rails.const_get(controller_name.to_s)
     end
 
     def all

@@ -8,12 +8,10 @@ module Admin4rails
     end
 
     def self.module_exists?(module_name)
-      begin
-        Admin4rails::const_get "#{module_name}"
-        true
-      rescue NameError
-        false
-      end
+      Admin4rails.const_get module_name.to_s
+      true
+    rescue NameError
+      false
     end
   end
 end
