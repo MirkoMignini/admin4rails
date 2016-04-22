@@ -50,7 +50,6 @@ module Admin4rails
 
     def setup_reloader
       reloader = ActiveSupport::FileUpdateChecker.new(admin_files) do
-        logger.info('Admin4Rails reload!')
         load_all_files
         init_resources
         setup_routes!
