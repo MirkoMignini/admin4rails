@@ -1,7 +1,7 @@
 PATH
   remote: ../../../admin4rails
   specs:
-    Admin4rails (0.0.1)
+    admin4rails (0.0.1)
       bootstrap-sass (~> 3.3.6)
       cocoon
       coffee-rails (~> 4.1.0)
@@ -257,7 +257,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Admin4rails!
+  admin4rails!
   bullet
   capybara
   coveralls

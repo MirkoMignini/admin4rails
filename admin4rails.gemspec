@@ -5,7 +5,7 @@ require 'admin4rails/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'Admin4rails'
+  s.name        = 'admin4rails'
   s.version     = Admin4rails::VERSION
   s.authors     = ['Mirko Mignini']
   s.email       = ['mirko.mignini@gmail.com']
