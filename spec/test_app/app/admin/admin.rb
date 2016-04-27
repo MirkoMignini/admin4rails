@@ -3,7 +3,9 @@ Admin4rails.setup do
     icon 'fa-table'
   end
 
-  resource class: Comment
+  resource class: Comment do
+    belongs_to :post
+  end
 
   resource class: AdminUser do
     icon 'fa-user-md'
