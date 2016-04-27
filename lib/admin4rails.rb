@@ -46,6 +46,13 @@ module Admin4rails
       @resources ||= []
     end
 
+    def resource_from_table_name(table_name)
+      resources.each do |resource|
+        return resource if resource.klass.table_name == table_name
+      end
+      nil
+    end
+
     private
 
     def setup_reloader

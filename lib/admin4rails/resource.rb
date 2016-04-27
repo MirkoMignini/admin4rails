@@ -1,4 +1,5 @@
 require 'admin4rails/attribute'
+require 'admin4rails/association'
 require 'admin4rails/utility'
 
 module Admin4rails
@@ -30,6 +31,10 @@ module Admin4rails
 
     def attributes
       @attributes || setup_attributes
+    end
+
+    def associations
+      @associations || setup_associations
     end
 
     def attribute(name)

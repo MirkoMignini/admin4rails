@@ -1,15 +1,16 @@
 require_dependency 'admin4rails/application_controller'
-require 'admin4rails/grid/controller'
 
 module Admin4rails
   class ResourcesController < ApplicationController
+    include Admin4rails::GridUtils
+
     before_action :set_resource
 
     def index
-      setup_grid
+      setup_grid(resource)
 
       respond_to do |format|
-        format.html { @grid = Admin4rails::Grid::Controller.grid(resource, params) }
+        format.html { @grid = prepare_grid(resource, params) }
         format.json { render(json: resource.all) }
       end
     end
@@ -81,13 +82,6 @@ module Admin4rails
 
     def show_fields
       resource.attributes.map(&:name)
-    end
-
-    def setup_grid
-      unless Utility.module_exists?(Admin4rails::Grid::Controller.grid_controller_name(resource))
-        Admin4rails::Grid::Controller.create_controller(resource)
-      end
-      Admin4rails.const_get(Admin4rails::Grid::Controller.grid_controller_name(resource)).resource = resource
     end
 
     %w(create_params update_params).each do |method_name|

@@ -20,7 +20,7 @@ module Admin4rails
     def resources(_node)
       concat(dashboard)
       Admin4rails.resources.each do |res|
-        concat(resource(res))
+        concat(resource(res)) if res.dsl.belongs_to.nil?
       end
     end
 

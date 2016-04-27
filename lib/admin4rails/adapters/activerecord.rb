@@ -13,6 +13,17 @@ module Admin4rails
         end
         @attributes
       end
+
+      def setup_associations
+        @associations = []
+        @klass.reflections.keys.each do |key|
+          ar_association = @klass.reflections[key]
+          if ar_association.macro == :has_many
+            @associations << Association.new(self, ar_association)
+          end
+        end
+        @associations
+      end
     end
   end
 end
