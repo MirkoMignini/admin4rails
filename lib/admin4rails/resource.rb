@@ -29,12 +29,25 @@ module Admin4rails
       not_implemented
     end
 
+    def belongs_to
+      @belongs_to ||= setup_belongs_to
+    end
+
+    def belongs_to_id
+      return nil if belongs_to.nil?
+      "#{belongs_to.klass.name.underscore}_id".to_sym
+    end
+
+    def parents
+      @parents ||= setup_parents
+    end
+
     def attributes
-      @attributes || setup_attributes
+      @attributes ||= setup_attributes
     end
 
     def associations
-      @associations || setup_associations
+      @associations ||= setup_associations
     end
 
     def attribute(name)
@@ -117,6 +130,21 @@ module Admin4rails
 
     def setup_attributes
       not_implemented
+    end
+
+    def setup_parents
+      list = []
+      parent = belongs_to
+      until parent.nil?
+        list << parent
+        parent = parent.belongs_to
+      end
+      list
+    end
+
+    def setup_belongs_to
+      return nil if dsl.belongs_to.nil?
+      Admin4rails.resource_from_symbol(dsl.belongs_to)
     end
 
     def not_implemented

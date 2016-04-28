@@ -9,6 +9,7 @@ module Admin4rails
       Admin4rails::Engine.routes.draw do
         extend RouterHelpers
         dsl_resources.each do |resource|
+          #  next if resource.belongs_to.nil?
           draw_routes(resource.model_name.underscore.pluralize.to_sym, resource)
         end
         root to: 'application#home'
@@ -22,7 +23,7 @@ module Admin4rails
         draw_routes(association.name.to_sym, association.associated_resource)
       end
     end
-    
+
     def draw_routes(route_symbol, resource)
       resources route_symbol do
         draw_associations_routes(resource) unless resource.nil?

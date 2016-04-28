@@ -29,7 +29,15 @@ module Admin4rails
     def new
       @form_type = :new
       @attributes = resource.filter_attributes(new_fields)
-      @record = resource.klass.new
+      @record = new_record
+    end
+
+    def new_record
+      if resource.belongs_to.nil?
+        resource.klass.new
+      else
+        resource.klass.where(resource.belongs_to_id => params[resource.belongs_to_id]).build
+      end
     end
 
     def create
@@ -97,6 +105,16 @@ module Admin4rails
 
     def set_resource
       @resource = resource
+      set_nested_resources
+    end
+
+    def set_nested_resources
+      @parent_resources = []
+      previous = resource
+      resource.parents.each do |parent|
+        @parent_resources << parent.klass.find(params[previous.belongs_to_id])
+        previous = parent
+      end
     end
   end
 end

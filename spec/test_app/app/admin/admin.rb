@@ -7,6 +7,10 @@ Admin4rails.setup do
     belongs_to :post
   end
 
+  resource class: Reply do
+    belongs_to :comment
+  end
+
   resource class: AdminUser do
     icon 'fa-user-md'
   end

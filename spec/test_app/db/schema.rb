@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406135705) do
+ActiveRecord::Schema.define(version: 20160428154632) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -48,5 +48,14 @@ ActiveRecord::Schema.define(version: 20160406135705) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "replies", force: :cascade do |t|
+    t.integer  "comment_id"
+    t.text     "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "replies", ["comment_id"], name: "index_replies_on_comment_id"
 
 end

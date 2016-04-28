@@ -7,7 +7,11 @@ module Admin4rails
       else
         capture do
           @attributes.each do |attribute|
-            concat(form.input(attribute.name.to_sym))
+            if attribute.name.end_with?('_id')
+              concat(form.association(attribute.name.gsub('_id', '').to_sym))
+            else
+              concat(form.input(attribute.name.to_sym))
+            end
           end
         end
       end

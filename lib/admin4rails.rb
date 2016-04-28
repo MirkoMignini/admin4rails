@@ -53,6 +53,13 @@ module Admin4rails
       nil
     end
 
+    def resource_from_symbol(sym)
+      resources.each do |resource|
+        return resource if resource.model_name.underscore.to_sym == sym
+      end
+      nil
+    end
+
     private
 
     def setup_reloader

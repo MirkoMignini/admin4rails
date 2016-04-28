@@ -13,8 +13,8 @@ module AdminUsersController
   end
 end
 
-# module AdminUsersGridController
-#   def fields
-#     [:name, :surname, :email, :last_sign_in_at, :sign_in_count]
-#   end
-# end
+module AdminUsersGridController
+  def fields
+    [:name, :surname, :email, :last_sign_in_at, :sign_in_count]
+  end
+end
