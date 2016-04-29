@@ -62,9 +62,9 @@ module Admin4rails
           end.to change { Post.count }.by(1)
         end
 
-        it 'redirect to the new post after creation' do
+        it 'redirect to the index after creation' do
           post(:create, post: post_attributes)
-          expect(response).to redirect_to(Post.last)
+          expect(response).to redirect_to(posts_path)
         end
 
         it 'assigns the resource to controller' do
@@ -112,8 +112,8 @@ module Admin4rails
       context 'when valid' do
         let(:new_values) { attributes_for(:post) }
 
-        it 'success' do
-          expect(response).to redirect_to(post)
+        it 'redirect to index after success' do
+          expect(response).to redirect_to(posts_path)
         end
 
         it 'saves and assigns post to @post' do

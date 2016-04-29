@@ -15,7 +15,7 @@ module Admin4rails
 
     context 'Header' do
       it 'has right title and description' do
-        expect(page).to have_selector('h1', text: 'Posts')
+        expect(page).to have_selector('h1', text: 'Posts list')
         expect(page).to have_selector('h1 small', text: '')
       end
     end

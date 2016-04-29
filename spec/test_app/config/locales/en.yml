@@ -24,6 +24,7 @@ en:
     models:
       admin_user: 'Administrator'
 
-  posts:
+  admin_users:
     index:
-      title: 'Post'
+      title: 'Administrators complete list'
+      description: 'adminz rulez'

@@ -18,7 +18,6 @@ module Admin4rails
     context 'Sidebar' do
       it 'has the sidebar items' do
         expect(page).to have_selector("li a[href='/admin4rails/posts']", text: 'Posts')
-        expect(page).to have_selector("li a[href='/admin4rails/admin_users']", text: 'Adminusers')
       end
 
       it 'has the dashboard item' do
