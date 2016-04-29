@@ -1,16 +1,16 @@
-= simple_form_for(@record) do |f|
+= simple_form_for(form_path) do |f|
   = f.error_notification
 
   .form-inputs
     = form_fields(f)
 
-    - @resource.associations.each do |association|
-      %h3= association.name.humanize
-      %div{id: "#{association.name}"}
-        = f.simple_fields_for association.name.to_sym do |nested_record|
-          = render 'nested_form', f: nested_record
-        .links
-          = link_to_add_association 'add', f, association.name.to_sym, partial: 'nested_form'
+    -# - @resource.associations.each do |association|
+    -#   %h3= association.name.humanize
+    -#   %div{id: "#{association.name}"}
+    -#     = f.simple_fields_for association.name.to_sym do |nested_record|
+    -#       = render 'nested_form', f: nested_record
+    -#     .links
+    -#       = link_to_add_association 'add', f, association.name.to_sym, partial: 'nested_form'
 
   .form-actions
     = f.button :submit, class: 'btn-primary'

@@ -5,6 +5,7 @@ module Admin4rails
     include Admin4rails::GridUtils
 
     before_action :set_resource
+    before_action :set_parent_records
 
     def index
       setup_grid(resource)
@@ -45,7 +46,7 @@ module Admin4rails
       @record = resource.klass.create(create_params)
       respond_to do |format|
         if @record.save
-          format.html { redirect_to(@record, saved: 'Record was successfully created.') }
+          format.html { redirect_to(index_path, saved: 'Record was successfully created.') }
           format.json { render(:show, status: :created, location: @record) }
         else
           format.html { render(:new) }
@@ -60,7 +61,7 @@ module Admin4rails
       @record.update(update_params)
       respond_to do |format|
         if @record.save
-          format.html { redirect_to(@record, notice: 'Record was successfully updated.') }
+          format.html { redirect_to(index_path, notice: 'Record was successfully updated.') }
           format.json { render(:show, status: :ok, location: @record) }
         else
           format.html { render(:edit) }
@@ -73,12 +74,16 @@ module Admin4rails
       set_record
       @record.destroy
       respond_to do |format|
-        format.html { redirect_to(resource.index_path, notice: 'Record was successfully destroyed.') }
+        format.html { redirect_to(index_path, notice: 'Record was successfully destroyed.') }
         format.json { head(:no_content) }
       end
     end
 
     private
+
+    def index_path
+      @parent_records + [resource.model_name.underscore.pluralize]
+    end
 
     def new_fields
       resource.edit_attributes.map(&:name)
@@ -105,16 +110,16 @@ module Admin4rails
 
     def set_resource
       @resource = resource
-      set_nested_resources
     end
 
-    def set_nested_resources
-      @parent_resources = []
+    def set_parent_records
+      @parent_records = []
       previous = resource
       resource.parents.each do |parent|
-        @parent_resources << parent.klass.find(params[previous.belongs_to_id])
+        @parent_records << parent.klass.find(params[previous.belongs_to_id])
         previous = parent
       end
+      @parent_records.reverse!
     end
   end
 end
