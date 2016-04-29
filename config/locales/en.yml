@@ -1,0 +1,24 @@
+en:
+  default:
+    grid:
+      actions:
+        label: 'Actions'
+        show: 'Show'
+        edit: 'Edit'
+        delete: 'Delete'
+        delete_confirm: 'Are you sure?'
+
+    models:
+      edit:
+        title: 'Edit %{model}'
+        description: ''
+      index:
+        title: '%{models} list'
+        description: ''
+        create: 'Create %{model}'
+      new:
+        title: 'New %{model}'
+        description: ''
+      show:
+        title: '%{model}'
+        description: ''
