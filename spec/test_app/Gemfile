@@ -12,4 +12,5 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'bullet'
   gem 'spring'
+  gem 'lograge'
 end

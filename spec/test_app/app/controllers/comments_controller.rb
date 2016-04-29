@@ -5,7 +5,7 @@ module CommentsGridController
   def grid_columns
     super
     column('', html: true) do |record|
-      link_to('Replies', post_comment_replies_path(record.post_id, record))
+      link_to('Replies', @parent_records + [record, :replies])
     end
   end
 end
