@@ -34,7 +34,7 @@ module Admin4rails
     end
 
     def resource(res)
-      item(res.index_path, get_icon(res), res.model_name.pluralize.humanize)
+      item(res.index_path, get_icon(res), res.klass.model_name.human.pluralize)
     end
 
     def dashboard

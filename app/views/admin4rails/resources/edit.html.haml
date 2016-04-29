@@ -1,5 +1,5 @@
-= content_for(:title, "Edit #{@resource.model_name.humanize}")
-= content_for(:description, '')
+= content_for(:title, resource_label('edit', 'title'))
+= content_for(:description, resource_label('edit', 'description'))
 
 = box do
   = box_body do
