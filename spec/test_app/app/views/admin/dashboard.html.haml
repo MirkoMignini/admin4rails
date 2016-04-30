@@ -1,0 +1,17 @@
+= content_for(:title, 'Dashboard')
+= content_for(:description, '')
+
+.row
+  .col-lg-3.col-xs-6
+    = widget_counter( color: 'bg-aqua',
+                      value: @posts,
+                      text: 'Posts',
+                      icon: 'user',
+                      footer_text: 'Open posts',
+                      footer_url: posts_path)
+  .col-lg-3.col-xs-6
+    = widget_counter(color: 'bg-green', value: 666, text: 'Comments', icon: 'user')
+  .col-lg-3.col-xs-6
+    = widget_counter(color: 'bg-yellow', value: 999, text: 'Value1', icon: 'user')
+  .col-lg-3.col-xs-6
+    = widget_counter(color: 'bg-red', value: 333, text: 'Value2', icon: 'user')

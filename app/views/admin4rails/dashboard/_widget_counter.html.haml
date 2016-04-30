@@ -1,0 +1,10 @@
+.small-box{class: "#{options[:color]}"}
+  .inner
+    %h3= options[:value].to_s
+    %p= options[:text]
+  .icon
+    %i.fa{class: "fa-#{options[:icon]}"}
+  - if options.key?(:footer_text)
+    %a.small-box-footer{href: options[:footer_url]}
+      = options[:footer_text]
+      %i.fa.fa-arrow-circle-right

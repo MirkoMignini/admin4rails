@@ -12,7 +12,7 @@ module Admin4rails
           next unless resource.belongs_to.nil?
           draw_routes(resource.model_name.underscore.pluralize.to_sym, resource)
         end
-        root to: 'application#home'
+        root to: 'dashboard#show'
       end
     end
   end
