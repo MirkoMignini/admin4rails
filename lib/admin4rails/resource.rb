@@ -92,8 +92,8 @@ module Admin4rails
       end
     end
 
-    def view_partial(method, part)
-      "#{model_name.underscore}/#{method}_#{part}"
+    def view_partial(partial)
+      "admin/#{model_name.underscore}/#{partial}"
     end
 
     private

@@ -1,10 +1,15 @@
 module Admin4rails
   module FormHelper
     def form_fields(form)
-      fields_partial = @resource.view_partial(@form_type.to_s, 'fields')
-      if lookup_context.template_exists?(fields_partial, nil, true)
-        render(partial: fields_partial, locals: { f: form })
-      else
+      found_partial = nil
+      ["#{@form_type}_fields", 'fields'].each do |partial|
+        fields_partial = @resource.view_partial(partial)
+        if lookup_context.template_exists?(fields_partial, nil, true)
+          found_partial = fields_partial
+          break
+        end
+      end
+      if found_partial.nil?
         capture do
           @attributes.each do |attribute|
             if attribute.name.end_with?('_id')
@@ -14,6 +19,8 @@ module Admin4rails
             end
           end
         end
+      else
+        render(partial: found_partial, locals: { f: form })
       end
     end
   end
