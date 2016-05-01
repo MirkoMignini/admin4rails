@@ -2,7 +2,7 @@
   .login-logo
     = Admin4rails.header.logo.text.html_safe
   .login-box-body
-    %p.login-box-msg Sign in to start your session
+    %p.login-box-msg= t('login.message')
     = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
       = render partial: 'layouts/admin4rails/devise_messages'
       .form-group.has-feedback
@@ -16,7 +16,7 @@
       .row
         .col-xs-8
           - if devise_mapping.rememberable?
-            = f.input :remember_me, inline_label: 'Remember me', as: :boolean
+            = f.input :remember_me, inline_label: t('login.remember_me'), as: :boolean
         .col-xs-4
-          = f.submit 'Log in', class: 'btn btn-primary btn-block btn-flat'
-    = render "devise/shared/links"
+          = f.submit t('login.button'), class: 'btn btn-primary btn-block btn-flat'
+    /= render "devise/shared/links"

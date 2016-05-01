@@ -1,4 +1,12 @@
 en:
+  login:
+    message: 'Sign in to start your session'
+    button: 'Log in'
+    remember_me: 'Remember me'
+  header:
+    log_out: 'Log out'
+    profile: 'Profile'
+
   default:
     grid:
       actions:

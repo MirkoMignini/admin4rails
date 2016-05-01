@@ -1,0 +1,32 @@
+en:
+  login:
+    message: 'Accedi per iniziare la sessione'
+    button: 'Accedi'
+    remember_me: 'Ricordati di me'
+  header:
+    log_out: 'Disconnetti'
+    profile: 'Profilo'
+
+  default:
+    grid:
+      actions:
+        label: 'Azioni'
+        show: 'Mostra'
+        edit: 'Modifica'
+        delete: 'Elimina'
+        delete_confirm: 'Sei sicuro?'
+
+    models:
+      edit:
+        title: 'Modifica %{model}'
+        description: ''
+      index:
+        title: 'Lista %{models}'
+        description: ''
+        create: 'Crea %{model}'
+      new:
+        title: 'Nuovo %{model}'
+        description: ''
+      show:
+        title: '%{model}'
+        description: ''
