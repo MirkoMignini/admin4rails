@@ -4,8 +4,8 @@ module Admin4rails
       t(attribute,
         scope: "#{@resource.klass.name.underscore.pluralize}.#{view}",
         default: t("default.models.#{view}.#{attribute}"),
-        model: @resource.klass.model_name.human,
-        models: @resource.klass.model_name.human(count: 2))
+        model: @resource.human,
+        models: @resource.human_plural)
     end
 
     def grid_label(view, attribute)

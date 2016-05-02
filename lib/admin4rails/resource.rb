@@ -14,7 +14,21 @@ module Admin4rails
     end
 
     def model_name
-      klass.name
+      klass.model_name.to_s
+    end
+
+    def human
+      klass.model_name.human
+    end
+
+    alias human_singular human
+
+    def human_plural
+      klass.model_name.human(count: 2, default: human.pluralize)
+    end
+
+    def plural_sym
+      klass.name.underscore.pluralize.to_sym
     end
 
     def controller_name

@@ -22,7 +22,9 @@
 en:
   activerecord:
     models:
-      admin_user: 'Administrator'
+      admin_user:
+        one: 'Administrator'
+        other: 'Administrators'
 
   admin_users:
     index:

@@ -10,7 +10,7 @@ module Admin4rails
         extend RouterHelpers
         dsl_resources.each do |resource|
           next unless resource.belongs_to.nil?
-          draw_routes(resource.model_name.underscore.pluralize.to_sym, resource)
+          draw_routes(resource.plural_sym, resource)
         end
         root to: 'dashboard#show'
       end
