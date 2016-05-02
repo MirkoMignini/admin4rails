@@ -99,9 +99,12 @@ module Admin4rails
 
     %w(create_params update_params).each do |method_name|
       define_method(method_name) do |*_args|
-        permitted_params = resource.permitted_params(@attributes)
         params.require(resource.klass.name.underscore.to_sym).permit(permitted_params)
       end
+    end
+
+    def permitted_params
+      resource.permitted_params(@attributes)
     end
 
     def set_record
