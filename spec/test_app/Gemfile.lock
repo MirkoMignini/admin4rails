@@ -1,7 +1,7 @@
 PATH
   remote: ../../../admin4rails
   specs:
-    admin4rails (0.0.1)
+    admin4rails (0.0.2)
       bootstrap-sass (~> 3.3.6)
       cocoon
       coffee-rails (~> 4.1.0)
@@ -56,7 +56,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     ast (2.2.0)
-    autoprefixer-rails (6.3.5)
+    autoprefixer-rails (6.3.6)
       execjs
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
@@ -112,7 +112,7 @@ GEM
     factory_girl_rails (4.6.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    font-awesome-rails (4.5.0.1)
+    font-awesome-rails (4.6.1.0)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)

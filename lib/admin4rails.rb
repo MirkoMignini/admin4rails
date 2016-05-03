@@ -13,10 +13,12 @@ require 'devise'
 require 'admin4rails/engine'
 require 'admin4rails/router'
 require 'admin4rails/resource'
+require 'admin4rails/default_dsl'
 
 module Admin4rails
   class << self
     def initialize!
+      Admin4rails::DefaultDsl.setup_default_dsl
       load_all_files
       init_resources
       @router = Admin4rails::Router.new(self)

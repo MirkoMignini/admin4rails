@@ -11,7 +11,9 @@ module Admin4rails
     end
 
     config.after_initialize do
+      Rails.logger.info 'Admin4rails initializing...'
       Admin4rails.initialize!
+      Rails.logger.info 'Admin4rails initialized'
     end
   end
 end
