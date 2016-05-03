@@ -10,10 +10,12 @@ module Admin4rails
       Devise::SessionsController.layout 'admin4rails/devise'
     end
 
-    config.after_initialize do
-      Rails.logger.info 'Admin4rails initializing...'
+    config.before_eager_load do
       Admin4rails.initialize!
-      Rails.logger.info 'Admin4rails initialized'
+    end
+
+    config.after_initialize do
+      Admin4rails.initialize!
     end
   end
 end

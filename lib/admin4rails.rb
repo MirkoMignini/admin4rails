@@ -18,12 +18,16 @@ require 'admin4rails/default_dsl'
 module Admin4rails
   class << self
     def initialize!
+      return if @initialized
+      Rails.logger.info 'Admin4rails initializing...'
       Admin4rails::DefaultDsl.setup_default_dsl
       load_all_files
       init_resources
       @router = Admin4rails::Router.new(self)
       setup_reloader if Rails.env.development?
       load_all_plugins
+      Rails.logger.info 'Admin4rails initialized'
+      @initialized = true
     end
 
     def setup(&block)
