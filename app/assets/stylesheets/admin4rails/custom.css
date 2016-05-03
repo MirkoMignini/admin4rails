@@ -1,0 +1,11 @@
+.datagrid-form {
+  padding: 0px;
+}
+
+.datagrid-filter {
+  margin: 0px;
+}
+
+.datagrid-filter input[class*='filter'] {
+  width: 100%;
+}

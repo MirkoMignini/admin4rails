@@ -10,9 +10,13 @@ module Admin4rails
         end
 
         def grid(resource, params, custom_scope = nil)
-          grid_controller(resource).new(params[:grid]) do |scope|
+          grid_controller(resource).new(grid_params(resource, params)) do |scope|
             custom_scope.nil? ? scope.page(params[:page]) : custom_scope
           end
+        end
+
+        def grid_params(resource, params)
+          params["admin4rails_#{resource.model_name.underscore.pluralize}_grid".to_sym]
         end
 
         def grid_controller(resource)

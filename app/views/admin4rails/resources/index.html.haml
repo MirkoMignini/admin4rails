@@ -1,6 +1,8 @@
 = content_for(:title, resource_label('index', 'title'))
 = content_for(:description, resource_label('index', 'description'))
 
+= datagrid_form_for(@grid, url: request.original_url) if @grid.filters.count > 0
+
 = box do
   = box_body do
     = datagrid(@grid)

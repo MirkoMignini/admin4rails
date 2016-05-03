@@ -6,6 +6,7 @@ module Admin4rails
           scope do
             grid_scope
           end
+          grid_filters
           grid_columns
           grid_actions
         end
@@ -34,6 +35,12 @@ module Admin4rails
           @@resource.filter_attributes(fields).each do |attribute|
             column(attribute.name.to_sym)
           end
+        end
+
+        def grid_filters
+          # @@resource.filter_attributes(fields).each do |attribute|
+          #   filter(attribute.name.to_sym)
+          # end
         end
 
         def grid_actions

@@ -2,6 +2,11 @@ module PostsController
 end
 
 module PostsGridController
+  def grid_filters
+    filter(:title)
+    filter(:description)
+  end
+
   def grid_columns
     super
     column('', html: true) do |record|
