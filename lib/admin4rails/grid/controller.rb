@@ -20,6 +20,10 @@ module Admin4rails
           end
         end
 
+        def grid_params(resource, params)
+          params["admin4rails_#{resource.model_name.underscore.pluralize}_grid".to_sym]
+        end
+
         def grid_controller(resource)
           Admin4rails.const_get(grid_controller_name(resource))
         end
