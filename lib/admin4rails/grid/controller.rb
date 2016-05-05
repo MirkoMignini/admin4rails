@@ -9,9 +9,14 @@ module Admin4rails
           setup_controller(resource, ancestor)
         end
 
-        def grid(resource, params, custom_scope = nil)
+        def grid(resource, params)
           grid_controller(resource).new(params[:grid]) do |scope|
-            custom_scope.nil? ? scope.page(params[:page]) : custom_scope
+            res_id = resource.belongs_to_id
+            if res_id.nil?
+              scope.page(params[:page])
+            else
+              scope.where(res_id => params[res_id]).page(params[:page])
+            end
           end
         end
 
