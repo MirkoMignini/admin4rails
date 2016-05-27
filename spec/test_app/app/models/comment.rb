@@ -3,4 +3,8 @@ class Comment < ActiveRecord::Base
 
   has_many :replies
   accepts_nested_attributes_for :replies, allow_destroy: true
+
+  def to_s
+    'Comment'
+  end
 end

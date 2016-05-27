@@ -1,0 +1,7 @@
+%ol.breadcrumb
+  %li= link_to('Dashboard', root_path)
+  - unless @parent_records.nil?
+    - @parent_records.count.times do |index|
+      %li= link_to(@parent_records[index], @parent_records[0..index])
+  %li.active
+    Current
