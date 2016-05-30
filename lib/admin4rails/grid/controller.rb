@@ -10,7 +10,7 @@ module Admin4rails
         end
 
         def grid(resource, params)
-          grid_controller(resource).new(params[:grid]) do |scope|
+          grid_controller(resource).new(grid_params(resource, params)) do |scope|
             res_id = resource.belongs_to_id
             if res_id.nil?
               scope.page(params[:page])
