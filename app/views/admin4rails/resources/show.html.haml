@@ -6,5 +6,5 @@
     %table.table
       - @attributes.each do |attribute|
         %tr
-          %td.show_key= attribute.name.humanize
+          %td.show_key= attribute.display_text
           %td.show_value= @record[attribute.name]
