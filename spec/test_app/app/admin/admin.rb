@@ -14,4 +14,10 @@ Admin4rails.setup do
   resource class: AdminUser do
     icon 'fa-user-md'
   end
+
+  resource class: Physician do
+  end
+
+  resource class: Patient do
+  end
 end

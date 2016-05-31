@@ -6,8 +6,8 @@ module Admin4rails
       @resource = resource
       @name = ar_association.name.to_s
       @macro = ar_association.macro
-      # @table_name = ar_association.table_name
-      # @foreign_key = ar_association.foreign_key
+      @table_name = ar_association.table_name
+      @foreign_key = ar_association.foreign_key
     end
 
     def associated_resource

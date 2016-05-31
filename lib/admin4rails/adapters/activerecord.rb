@@ -18,7 +18,9 @@ module Admin4rails
         associations = []
         @klass.reflections.keys.each do |key|
           ar_association = @klass.reflections[key]
-          if ar_association.macro == :has_many
+          if ar_association.macro == :has_many &&
+              # ar_association.is_a?(ActiveRecord::Reflection::HasManyReflection)
+              ar_association.respond_to?(:delegate_reflection) == false
             associations << Association.new(self, ar_association)
           end
         end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428154632) do
+ActiveRecord::Schema.define(version: 20160531170428) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20160428154632) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "appointments", force: :cascade do |t|
+    t.integer  "physician_id"
+    t.integer  "patient_id"
+    t.datetime "appointment_date"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "appointments", ["patient_id"], name: "index_appointments_on_patient_id"
+  add_index "appointments", ["physician_id"], name: "index_appointments_on_physician_id"
+
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id"
     t.text     "text"
@@ -41,6 +52,18 @@ ActiveRecord::Schema.define(version: 20160428154632) do
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
+
+  create_table "patients", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "physicians", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
