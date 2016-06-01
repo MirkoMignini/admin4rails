@@ -11,6 +11,13 @@ module AdminUsersController
   def create_params
     [:name, :surname, :email, :password, :password_confirmation]
   end
+
+  def test_action
+    set_record
+    @record.name = 'works'
+    @record.save
+    redirect_to :back
+  end
 end
 
 module AdminUsersGridController

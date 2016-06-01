@@ -13,6 +13,7 @@ Admin4rails.setup do
 
   resource class: AdminUser do
     icon 'fa-user-md'
+    member_action verb: :put, method: 'test_action'
   end
 
   resource class: Physician do

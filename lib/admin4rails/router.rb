@@ -26,7 +26,17 @@ module Admin4rails
 
     def draw_routes(route_symbol, resource)
       resources route_symbol do
+        draw_custom_routes(resource) unless resource.nil?
         draw_associations_routes(resource) unless resource.nil?
+      end
+    end
+
+    def draw_custom_routes(resource)
+      if resource.dsl.member_action?
+        member do
+          put resource.dsl.member_action[:method] if resource.dsl.member_action[:verb] == :put
+        end
+        # TODO
       end
     end
   end

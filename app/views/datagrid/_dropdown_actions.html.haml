@@ -11,3 +11,5 @@
     %li.divider
     %li
       = link_to grid_label('actions', 'delete'), delete_path(record), :method => :delete, :data => { :confirm => grid_label('actions', 'delete_confirm') }, class: 'bg-danger'
+    - if lookup_context.template_exists?(@resource.view_partial('dropdown_actions'), nil, true)
+      = render(partial: @resource.view_partial('dropdown_actions'), locals: { record: record })
