@@ -14,7 +14,14 @@ module AdminUsersController
 
   def test_action
     set_record
-    @record.name = 'works'
+    @record.name = 'test_action'
+    @record.save
+    redirect_to :back
+  end
+
+  def test_action2
+    set_record
+    @record.name = 'test_action2'
     @record.save
     redirect_to :back
   end

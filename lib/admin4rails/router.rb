@@ -32,11 +32,23 @@ module Admin4rails
     end
 
     def draw_custom_routes(resource)
-      if resource.dsl.member_action?
-        member do
-          put resource.dsl.member_action[:method] if resource.dsl.member_action[:verb] == :put
+      draw_member_actions(resource) if resource.dsl.member_actions.count > 0
+      draw_collection_actions(resource) if resource.dsl.collection_actions.count > 0
+    end
+
+    def draw_member_actions(resource)
+      member do
+        resource.dsl.member_actions.each do |member_action|
+          send(member_action[:verb], member_action[:method])
         end
-        # TODO
+      end
+    end
+
+    def draw_collection_actions(resource)
+      collection do
+        resource.dsl.collection_actions.each do |_collection_action|
+          send(member_action[:verb], member_action[:method])
+        end
       end
     end
   end
