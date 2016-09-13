@@ -8,4 +8,6 @@
     = datagrid(@grid)
   = box_footer do
     .pull-right
+
+      = link_to(grid_label('export', 'label'), index_path(:csv), class: 'btn btn-info')
       = link_to(resource_label('index', 'create'), new_path, class: 'btn btn-primary')

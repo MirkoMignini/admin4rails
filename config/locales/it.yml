@@ -9,6 +9,8 @@ it:
 
   default:
     grid:
+      export:
+        label: 'Esporta'
       actions:
         label: 'Azioni'
         show: 'Mostra'

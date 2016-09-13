@@ -1,7 +1,8 @@
 module Admin4rails
   module RoutingHelper
-    def index_path
-      @parent_records + [resource.model_name.underscore.pluralize]
+    def index_path(format = nil)
+      url = url_for(@parent_records + [@resource.model_name.underscore.pluralize])
+      url = "#{url}.#{format.to_s}" unless format.nil?
     end
 
     def new_path

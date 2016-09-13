@@ -1,4 +1,5 @@
 require_dependency 'admin4rails/application_controller'
+require 'admin4rails/exporters/csv'
 
 module Admin4rails
   class ResourcesController < ApplicationController
@@ -13,6 +14,7 @@ module Admin4rails
       respond_to do |format|
         format.html { @grid = prepare_grid(resource, params) }
         format.json { render(json: resource.all) }
+        format.csv { send_data(Exporters::Csv.export(resource, params), filename: export_filename(:csv)) }
       end
     end
 
@@ -123,6 +125,10 @@ module Admin4rails
         previous = parent
       end
       @parent_records.reverse!
+    end
+
+    def export_filename(format)
+      "#{resource.human_plural}.#{format.to_s}"
     end
   end
 end

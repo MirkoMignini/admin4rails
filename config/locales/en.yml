@@ -9,6 +9,8 @@ en:
 
   default:
     grid:
+      export:
+        label: 'Export'
       actions:
         label: 'Actions'
         show: 'Show'
