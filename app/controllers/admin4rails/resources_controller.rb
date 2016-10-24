@@ -14,7 +14,7 @@ module Admin4rails
       respond_to do |format|
         format.html { @grid = prepare_grid(resource, params) }
         format.json { render(json: resource.all) }
-        format.csv { send_data(Exporters::Csv.export(resource, params), filename: export_filename(:csv)) }
+        format.csv { send_data(Exporters::Csv.export(resource, export_fields, params), filename: export_filename(:csv)) }
       end
     end
 
@@ -96,6 +96,10 @@ module Admin4rails
     end
 
     def show_fields
+      resource.attributes.map(&:name)
+    end
+
+    def export_fields
       resource.attributes.map(&:name)
     end
 

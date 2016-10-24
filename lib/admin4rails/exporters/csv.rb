@@ -3,14 +3,13 @@ module Admin4rails
     require 'csv'
 
     module Csv
-      def self.export(resource, params)
+      def self.export(resource, attributes, params)
         resources = if resource.belongs_to_id.nil?
           resource.all
         else
           resource.klass.where(resource.belongs_to_id => params[resource.belongs_to_id])
         end
 
-        attributes = resource.attributes.map(&:name)
         CSV.generate(headers: true) do |csv|
           csv << attributes
           resources.each do |record|
