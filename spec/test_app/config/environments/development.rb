@@ -41,4 +41,6 @@ Rails.application.configure do
 
   # Enable lograge logging
   config.lograge.enabled = true
+
+  config.i18n.fallbacks = true
 end

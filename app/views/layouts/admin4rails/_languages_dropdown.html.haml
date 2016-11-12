@@ -1,0 +1,8 @@
+- unless Admin4rails.languages.nil?
+  %li.dropdown
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+      Languages
+    %ul.dropdown-menu
+      %li
+        - Admin4rails.languages.each do |language|
+          = link_to language[:text], set_locale_path(locale: language[:locale]), method: :put, class: ('bg-info' if I18n.locale == language[:locale])

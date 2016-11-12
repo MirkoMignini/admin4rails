@@ -22,4 +22,7 @@ Admin4rails.setup do
 
   resource class: Patient do
   end
+
+  language text: 'Italiano', locale: :it
+  language text: 'English', locale: :en
 end

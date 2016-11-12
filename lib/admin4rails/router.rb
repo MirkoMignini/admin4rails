@@ -12,6 +12,7 @@ module Admin4rails
           next unless resource.belongs_to.nil?
           draw_routes(resource.plural_sym, resource)
         end
+        put '/set_locale', to: 'application#set_locale'
         root to: 'dashboard#show'
       end
     end
